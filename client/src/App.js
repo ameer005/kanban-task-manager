@@ -3,7 +3,7 @@ import AnimatedRoutes from "./components/Routes/AnimatedRoutes";
 
 const App = () => {
   return (
-    <main className="min-h-screen text-colorNeutral text-xs">
+    <main className=" text-colorNeutral text-xs">
       <AnimatedRoutes />
     </main>
   );

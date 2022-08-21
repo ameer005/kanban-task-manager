@@ -31,3 +31,7 @@
 .btn-primary {
   @apply bg-colorpurple rounded-full hover:bg-colorLightPurple ut-animation font-bold py-[11px];
 }
+
+.sidebar-h {
+  height: calc(100vh - 100px);
+}
