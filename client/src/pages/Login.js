@@ -1,12 +1,32 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch, useSelector } from "react-redux";
 
 import InputField from "../components/FormComps/InputField";
 import { schemaLogin } from "../utils/yup/schema";
+import { login, resetAuth } from "../redux/features/auth/authSlice";
+import LoadingSpinner from "../components/LoadingSpinner/LoadingSpinner";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(resetAuth());
+    }
+
+    if (isSuccess) {
+      navigate("/");
+      dispatch(resetAuth());
+    }
+  }, [isError, isSuccess, message]);
+
   const {
     register,
     handleSubmit,
@@ -16,7 +36,7 @@ const Login = () => {
   });
 
   const submitForm = (formData) => {
-    console.log(formData);
+    dispatch(login(formData));
   };
 
   return (
@@ -46,7 +66,7 @@ const Login = () => {
           />
 
           <button type="submit" className="btn-primary w-full text-sm">
-            Login to your account
+            {isLoading ? <LoadingSpinner /> : "Login to your account"}
           </button>
         </form>
 

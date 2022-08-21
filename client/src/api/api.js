@@ -1,14 +1,14 @@
 import axios from "axios";
 
-let token = JSON.parse(localStorage.getItem("token"));
+let token = localStorage.getItem("token");
 
 const api = axios.create({
-  baseURL: "http://127.0.0.1:5000/api/v1",
+  baseURL: "/api/v1",
 });
 
 api.interceptors.request.use(
   (config) => {
-    token = JSON.parse(localStorage.getItem("token"));
+    token = localStorage.getItem("token");
     config.headers.common["Authorization"] = `Bearer ${token}`;
     return config;
   },
