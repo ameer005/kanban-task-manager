@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700&display=swap");
+
+@layer base {
+  *,
+  *::after,
+  *::before {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: 400;
+    line-height: 1;
+    overflow-x: hidden;
+  }
+}
+
+.ut-animation {
+  @apply transition-all duration-200;
+}
+
+.input {
+  @apply w-full px-4 py-[9px] text-sm bg-transparent border border-colorPrimaryLight2 placeholder:text-colorNeutral2  rounded-sm outline-none;
+}
+
+.btn-primary {
+  @apply bg-colorpurple rounded-full hover:bg-colorLightPurple ut-animation font-bold py-[11px];
+}
