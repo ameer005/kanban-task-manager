@@ -1,28 +1,52 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-import InputField from "../components/InputField/InputField";
+import InputField from "../components/FormComps/InputField";
+import { schemaSignup } from "../utils/yup/schema";
 
 const Signup = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schemaSignup),
+  });
+
+  const submitForm = (formData) => {
+    console.log(formData);
+  };
+
   return (
     <main className="h-screen flex items-center justify-center bg-colorPrimary">
       <section className="w-full max-w-[30rem] p-7 bg-colorPrimaryLight rounded-sm">
         <h3 className="text-2xl font-bold mb-8">Sign Up</h3>
 
-        <form className="flex flex-col gap-5 mb-7">
+        <form
+          onSubmit={handleSubmit(submitForm)}
+          className="flex flex-col gap-5 mb-7"
+        >
           <InputField
+            errors={errors}
+            register={register}
             labelText="Name"
             type="text"
             name="name"
             placeHolder="Your name"
           />
           <InputField
+            errors={errors}
+            register={register}
             labelText="Email"
             type="text"
             name="email"
             placeHolder="Your Email"
           />
           <InputField
+            errors={errors}
+            register={register}
             labelText="Password"
             type="password"
             name="password"
@@ -34,7 +58,7 @@ const Signup = () => {
           </button>
         </form>
 
-        <div>
+        <div className="flex justify-center">
           <p className="text-sm font-bold text-colorMediumGray">
             Already have an account?
             <Link className="text-colorpurple ml-2" to="/login">

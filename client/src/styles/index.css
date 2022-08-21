@@ -25,7 +25,7 @@
 }
 
 .input {
-  @apply w-full px-4 py-[9px] text-sm bg-transparent border border-colorPrimaryLight2 placeholder:text-colorNeutral2  rounded-sm outline-none;
+  @apply w-full px-4 py-[9px] text-sm bg-transparent border  placeholder:text-colorNeutral2  rounded-sm outline-none;
 }
 
 .btn-primary {
