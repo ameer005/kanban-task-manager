@@ -67,7 +67,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
       <section className="flex flex-col mb-7 pr-6">
         <button
           onClick={() => dispatch(logout())}
-          className="btn-primary w-full max-w-[5rem] self-center mb-5"
+          className="btn-primary w-full max-w-[6rem] self-center mb-5 text-sm"
         >
           Logout
         </button>

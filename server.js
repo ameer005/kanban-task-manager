@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const errorHandlerMiddleware = require("./middleware/errorHandler");
 const connectDb = require("./db/connect");
 const authRouter = require("./routes/authRoutes");
+const boardRouter = require("./routes/boardRoutes");
 
 const app = express();
 dotenv.config();
@@ -24,6 +25,7 @@ app.get("/api/v1", (req, res) => {
 
 // Routes
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/boards", boardRouter);
 
 // Global Error handeling
 app.use((req, res) => {
