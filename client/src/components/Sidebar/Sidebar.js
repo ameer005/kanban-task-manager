@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { RiDashboardLine } from "react-icons/ri";
 import { BiHide } from "react-icons/bi";
@@ -9,6 +9,34 @@ import { logout } from "../../redux/features/auth/authSlice";
 
 const Sidebar = ({ setShowSidebar, showSidebar }) => {
   const dispatch = useDispatch();
+  const { boardsList, isSuccess, isError, isLoading } = useSelector(
+    (state) => state.board.fetchAllBoards
+  );
+
+  // bord list function
+  const renderBoardsList = () => {
+    if (!isSuccess) return;
+
+    return boardsList.map((board) => {
+      return (
+        <li key={board._id}>
+          <NavLink
+            to={`/board/${board._id}`}
+            className={({ isActive }) =>
+              isActive
+                ? "flex gap-3 items-center px-6 py-3 text-colorNeutral bg-colorpurple rounded-r-full"
+                : "flex gap-3 items-center px-6 py-3 text-colorMediumGray "
+            }
+          >
+            <RiDashboardLine className="h-5 w-5 " />
+            <div className="text-base font-bold w-[90%] whitespace-nowrap overflow-hidden text-ellipsis">
+              {board.name}
+            </div>
+          </NavLink>
+        </li>
+      );
+    });
+  };
 
   return (
     <main
@@ -23,44 +51,14 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
           all boards(2)
         </h3>
 
-        {/* boards */}
-        <ul className="flex flex-col gap-1 pr-6  ">
-          {/* normal board list */}
-          <li>
-            <NavLink
-              to="/board/123"
-              className={({ isActive }) =>
-                isActive
-                  ? "flex gap-3 items-center px-6 py-3 text-colorNeutral bg-colorpurple rounded-r-full"
-                  : "flex gap-3 items-center px-6 py-3 text-colorMediumGray "
-              }
-            >
-              <RiDashboardLine className="h-5 w-5 " />
-              <div className="text-base font-bold ">sdfsdfsdf</div>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/board/1234"
-              className={({ isActive }) =>
-                isActive
-                  ? "flex gap-3 items-center px-6 py-3 text-colorNeutral bg-colorpurple rounded-r-full"
-                  : "flex gap-3 items-center px-6 py-3 text-colorMediumGray "
-              }
-            >
-              <RiDashboardLine className="h-5 w-5 " />
-              <div className="text-base font-bold ">sdfsdfsdf</div>
-            </NavLink>
-          </li>
+        {/* boards list */}
+        <ul className="flex flex-col gap-1 pr-6">{renderBoardsList()}</ul>
 
-          {/* create board button */}
-          <li className=" text-colorpurple px-6 py-3">
-            <button className="flex gap-3 items-center">
-              <RiDashboardLine className="h-5 w-5 " />
-              <div className="text-base font-bold ">+ Create New Board</div>
-            </button>
-          </li>
-        </ul>
+        {/* create board button */}
+        <button className="flex gap-3 items-center text-colorpurple px-6 py-3">
+          <RiDashboardLine className="h-5 w-5 " />
+          <div className="text-base font-bold ">+ Create New Board</div>
+        </button>
       </section>
 
       {/* Section Bottom */}
