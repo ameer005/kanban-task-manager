@@ -3,7 +3,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
 exports.getAllBoard = catchAsync(async (req, res, next) => {
-  const boards = await Board.find();
+  const boards = await Board.find({ user: req.user.id });
 
   res.status(200).json({
     status: "success",
@@ -21,7 +21,8 @@ exports.createBoard = catchAsync(async (req, res, next) => {
     return next(new AppError("Please provide all valued", 401));
   }
 
-  const board = await Board.create({ name });
+  req.body.user = req.user.id;
+  const board = await Board.create(req.body);
 
   res.status(201).json({
     status: "success",
