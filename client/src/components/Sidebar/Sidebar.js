@@ -1,10 +1,15 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import { RiDashboardLine } from "react-icons/ri";
 import { BiHide } from "react-icons/bi";
 
+import { logout } from "../../redux/features/auth/authSlice";
+
 const Sidebar = ({ setShowSidebar, showSidebar }) => {
+  const dispatch = useDispatch();
+
   return (
     <main
       className={`flex flex-col justify-between sidebar-h w-full max-w-[18.5rem] bg-colorPrimaryLight
@@ -59,7 +64,13 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
       </section>
 
       {/* Section Bottom */}
-      <section className="mb-7 pr-6">
+      <section className="flex flex-col mb-7 pr-6">
+        <button
+          onClick={() => dispatch(logout())}
+          className="btn-primary w-full max-w-[5rem] self-center mb-5"
+        >
+          Logout
+        </button>
         <button
           onClick={() => setShowSidebar((prev) => !prev)}
           className="flex items-center gap-2 text-base text-colorMediumGray font-bold px-6 py-3 hover:bg-colorNeutral hover:text-colorpurple w-full
