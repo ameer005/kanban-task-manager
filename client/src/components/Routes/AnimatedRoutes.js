@@ -6,6 +6,8 @@ import ProtectedRoutes from "./ProtectedRoutes";
 import Login from "../../pages/Login";
 import Signup from "../../pages/Signup";
 import HomePage from "../../pages/HomePage";
+import SharedLayout from "../../pages/SharedLayout";
+import Board from "../../pages/Board";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -14,8 +16,16 @@ const AnimatedRoutes = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
 
-      <Route element={<ProtectedRoutes />}>
-        <Route path="/" exact element={<HomePage />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoutes>
+            <SharedLayout />
+          </ProtectedRoutes>
+        }
+      >
+        <Route index exact element={<HomePage />} />
+        <Route path="board/:id" exact element={<Board />} />
       </Route>
     </Routes>
   );

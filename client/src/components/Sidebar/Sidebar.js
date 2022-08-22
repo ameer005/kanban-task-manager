@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 import { RiDashboardLine } from "react-icons/ri";
 import { BiHide } from "react-icons/bi";
@@ -20,19 +21,31 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
         {/* boards */}
         <ul className="flex flex-col gap-1 pr-6  ">
           {/* normal board list */}
-          <li className="flex gap-3 items-center text-colorMediumGray px-6 py-3">
-            <RiDashboardLine className="h-5 w-5 " />
-            <div className="text-base font-bold ">sdfsdfsdf</div>
+          <li>
+            <NavLink
+              to="/board/123"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center px-6 py-3 text-colorNeutral bg-colorpurple rounded-r-full"
+                  : "flex gap-3 items-center px-6 py-3 text-colorMediumGray "
+              }
+            >
+              <RiDashboardLine className="h-5 w-5 " />
+              <div className="text-base font-bold ">sdfsdfsdf</div>
+            </NavLink>
           </li>
-          <li
-            className={`flex gap-3 items-center px-6 py-3 ${
-              true
-                ? "text-colorNeutral bg-colorpurple rounded-r-full"
-                : "text-colorMediumGray "
-            }`}
-          >
-            <RiDashboardLine className="h-5 w-5 " />
-            <div className="text-base font-bold ">sdfsdfsdf</div>
+          <li>
+            <NavLink
+              to="/board/1234"
+              className={({ isActive }) =>
+                isActive
+                  ? "flex gap-3 items-center px-6 py-3 text-colorNeutral bg-colorpurple rounded-r-full"
+                  : "flex gap-3 items-center px-6 py-3 text-colorMediumGray "
+              }
+            >
+              <RiDashboardLine className="h-5 w-5 " />
+              <div className="text-base font-bold ">sdfsdfsdf</div>
+            </NavLink>
           </li>
 
           {/* create board button */}
@@ -46,10 +59,11 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
       </section>
 
       {/* Section Bottom */}
-      <section className="mb-10 px-6">
+      <section className="mb-7 pr-6">
         <button
           onClick={() => setShowSidebar((prev) => !prev)}
-          className="flex items-center gap-2 text-base text-colorMediumGray font-bold"
+          className="flex items-center gap-2 text-base text-colorMediumGray font-bold px-6 py-3 hover:bg-colorNeutral hover:text-colorpurple w-full
+          rounded-r-full ut-animation"
         >
           <BiHide className="h-5 w-5" />
           <div>Hide Sidebar</div>
