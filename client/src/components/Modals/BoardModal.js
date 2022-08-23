@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDom from "react-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -7,8 +8,28 @@ import { IoClose } from "react-icons/io5";
 
 import InputField from "../FormComps/InputField";
 import { boardSchema } from "../../utils/yup/schema";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+
+import {
+  createNewBoard,
+  resetCreateUpdateBoard,
+  fetchAllBoards,
+} from "../../redux/features/board/boardSlice";
 
 const BoardModal = ({ setShowBoardModal, isNew }) => {
+  const dispatch = useDispatch();
+  const { isError, message, isSuccess, isLoading } = useSelector(
+    (state) => state.board.createUpdateBoard
+  );
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(resetCreateUpdateBoard());
+      dispatch(fetchAllBoards());
+      setShowBoardModal(false);
+    }
+  }, [isError, message, isSuccess]);
+
   const {
     register,
     handleSubmit,
@@ -24,7 +45,10 @@ const BoardModal = ({ setShowBoardModal, isNew }) => {
   });
 
   const formSubmit = (formData) => {
-    console.log(formData);
+    // console.log(formData);
+    if (isNew) {
+      dispatch(createNewBoard(formData));
+    }
   };
 
   return ReactDom.createPortal(
@@ -92,7 +116,13 @@ const BoardModal = ({ setShowBoardModal, isNew }) => {
           </div>
 
           <button type={"submit"} className="btn-primary text-sm">
-            Create New Board
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : isNew ? (
+              "Create New Board"
+            ) : (
+              "Save Changes"
+            )}
           </button>
         </form>
       </div>

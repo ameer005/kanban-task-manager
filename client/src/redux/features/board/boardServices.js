@@ -6,8 +6,15 @@ const fetchAllBoards = async () => {
   return data;
 };
 
+const createNewBoard = async (payload) => {
+  const { data } = await api.post("/boards", payload);
+
+  return data;
+};
+
 const baordService = {
   fetchAllBoards,
+  createNewBoard,
 };
 
 export default baordService;
