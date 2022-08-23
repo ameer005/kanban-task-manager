@@ -9,7 +9,7 @@ const initialState = {
     isLoading: false,
     message: "",
   },
-  createUpdateBoard: {
+  defaultBoard: {
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -34,6 +34,7 @@ export const fetchAllBoards = createAsyncThunk(
   }
 );
 
+// Create new Board
 export const createNewBoard = createAsyncThunk(
   "auth/createNewBoard",
   async (payload, thunkApi) => {
@@ -50,15 +51,32 @@ export const createNewBoard = createAsyncThunk(
   }
 );
 
+// Delete Board
+export const deleteBoard = createAsyncThunk(
+  "auth/deleteBoard",
+  async (id, thunkApi) => {
+    try {
+      return await boardService.deleteBoard(id);
+    } catch (error) {
+      const message =
+        error.response.data.error ||
+        error.response.data.message ||
+        error.response.data.data;
+
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 const boardSlice = createSlice({
   name: "board",
   initialState,
   reducers: {
     resetCreateUpdateBoard: (state) => {
-      state.createUpdateBoard.isSuccess = false;
-      state.createUpdateBoard.isLoading = false;
-      state.createUpdateBoard.isError = false;
-      state.createUpdateBoard.message = "";
+      state.defaultBoard.isSuccess = false;
+      state.defaultBoard.isLoading = false;
+      state.defaultBoard.isError = false;
+      state.defaultBoard.message = "";
     },
   },
   extraReducers: (builder) => {
@@ -83,19 +101,36 @@ const boardSlice = createSlice({
 
       // Create new board
       .addCase(createNewBoard.pending, (state) => {
-        state.createUpdateBoard.isLoading = true;
+        state.defaultBoard.isLoading = true;
       })
       .addCase(createNewBoard.fulfilled, (state, { payload }) => {
-        state.createUpdateBoard.isLoading = false;
-        state.createUpdateBoard.isSuccess = true;
-        state.createUpdateBoard.isError = false;
+        state.defaultBoard.isLoading = false;
+        state.defaultBoard.isSuccess = true;
+        state.defaultBoard.isError = false;
         // console.log(payload);
       })
       .addCase(createNewBoard.rejected, (state, { payload }) => {
-        state.createUpdateBoard.isSuccess = false;
-        state.createUpdateBoard.isLoading = false;
-        state.createUpdateBoard.isError = true;
-        state.createUpdateBoard.message = payload;
+        state.defaultBoard.isSuccess = false;
+        state.defaultBoard.isLoading = false;
+        state.defaultBoard.isError = true;
+        state.defaultBoard.message = payload;
+      })
+
+      // delete board
+      .addCase(deleteBoard.pending, (state) => {
+        state.defaultBoard.isLoading = true;
+      })
+      .addCase(deleteBoard.fulfilled, (state, { payload }) => {
+        state.defaultBoard.isLoading = false;
+        state.defaultBoard.isSuccess = true;
+        state.defaultBoard.isError = false;
+        // console.log(payload);
+      })
+      .addCase(deleteBoard.rejected, (state, { payload }) => {
+        state.defaultBoard.isSuccess = false;
+        state.defaultBoard.isLoading = false;
+        state.defaultBoard.isError = true;
+        state.defaultBoard.message = payload;
       });
   },
 });

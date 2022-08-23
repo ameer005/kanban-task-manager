@@ -35,3 +35,7 @@
 .sidebar-h {
   min-height: calc(100vh - 100px);
 }
+
+.shadow-ut {
+  box-shadow: 0px 5px 15px rgb(99, 95, 199, 0.2);
+}
