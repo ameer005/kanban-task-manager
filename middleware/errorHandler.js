@@ -14,6 +14,11 @@ module.exports = (err, req, res, next) => {
       .join(", ");
   }
 
+  if (err.name === "CastError") {
+    defaultError.statusCode = 400;
+    defaultError.message = `invalid ${err.path}: ${err.value}`;
+  }
+
   // handling duplicate mongoose field error correctly
   if (err.code && err.code === 11000) {
     defaultError.statusCode = StatusCodes.BAD_REQUEST;
