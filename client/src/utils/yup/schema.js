@@ -16,3 +16,15 @@ export const schemaLogin = yup
     password: yup.string().min(8).required("Password cannot be empty"),
   })
   .required();
+
+export const boardSchema = yup
+  .object()
+  .shape({
+    name: yup.string().required("Board name cannot be empty"),
+    columns: yup.array().of(
+      yup.object().shape({
+        name: yup.string().required("column name cannot be empty"),
+      })
+    ),
+  })
+  .required();

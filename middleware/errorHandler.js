@@ -26,4 +26,9 @@ module.exports = (err, req, res, next) => {
     status: "fail",
     message: defaultError.message,
   });
+
+  // res.status(defaultError.statusCode).json({
+  //   status: "fail",
+  //   err,
+  // });
 };

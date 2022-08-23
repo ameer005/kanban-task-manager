@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -6,8 +6,11 @@ import { RiDashboardLine } from "react-icons/ri";
 import { BiHide } from "react-icons/bi";
 
 import { logout } from "../../redux/features/auth/authSlice";
+import BoardModal from "../Modals/BoardModal";
 
 const Sidebar = ({ setShowSidebar, showSidebar }) => {
+  const [showBoardModal, setShowBoardModal] = useState(false);
+
   const dispatch = useDispatch();
   const { boardsList, isSuccess, isError, isLoading } = useSelector(
     (state) => state.board.fetchAllBoards
@@ -55,7 +58,10 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
         <ul className="flex flex-col gap-1 pr-6">{renderBoardsList()}</ul>
 
         {/* create board button */}
-        <button className="flex gap-3 items-center text-colorpurple px-6 py-3">
+        <button
+          onClick={() => setShowBoardModal(true)}
+          className="flex gap-3 items-center text-colorpurple px-6 py-3"
+        >
           <RiDashboardLine className="h-5 w-5 " />
           <div className="text-base font-bold ">+ Create New Board</div>
         </button>
@@ -78,6 +84,9 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
           <div>Hide Sidebar</div>
         </button>
       </section>
+      {showBoardModal && (
+        <BoardModal isNew={true} setShowBoardModal={setShowBoardModal} />
+      )}
     </main>
   );
 };
