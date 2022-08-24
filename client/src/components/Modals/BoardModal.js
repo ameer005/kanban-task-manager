@@ -14,6 +14,7 @@ import {
   createNewBoard,
   resetCreateUpdateBoard,
   fetchAllBoards,
+  updateBoard,
 } from "../../redux/features/board/boardSlice";
 
 const BoardModal = ({ setShowBoardModal, isNew, board }) => {
@@ -56,6 +57,13 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
     console.log(formData);
     if (isNew) {
       dispatch(createNewBoard(formData));
+    } else {
+      const payload = {
+        id: board._id,
+        data: { ...formData },
+      };
+
+      dispatch(updateBoard(payload));
     }
   };
 

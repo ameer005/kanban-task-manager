@@ -15,6 +15,6 @@ router
   .route("/:id")
   .get(boardController.getBoard)
   .delete(boardController.deleteBoard)
-  .post(boardController.updateBoard);
+  .patch(boardController.updateBoard);
 
 module.exports = router;

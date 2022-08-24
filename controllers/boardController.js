@@ -62,10 +62,19 @@ exports.deleteBoard = catchAsync(async (req, res, next) => {
 });
 
 exports.updateBoard = catchAsync(async (req, res, next) => {
+  const board = await Board.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!board) {
+    return next(new AppError("No document found with this id", 404));
+  }
+
   res.status(200).json({
     status: "success",
-    // data: {
-    //   board,
-    // },
+    data: {
+      board,
+    },
   });
 });

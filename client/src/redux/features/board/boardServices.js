@@ -21,10 +21,18 @@ const deleteBoard = async (id) => {
   return data;
 };
 
+// Update Board
+const updateBoard = async (payload) => {
+  const { data } = await api.patch(`/boards/${payload.id}`, payload.data);
+
+  return data;
+};
+
 const baordService = {
   fetchAllBoards,
   createNewBoard,
   deleteBoard,
+  updateBoard,
 };
 
 export default baordService;

@@ -68,6 +68,23 @@ export const deleteBoard = createAsyncThunk(
   }
 );
 
+// Delete Board
+export const updateBoard = createAsyncThunk(
+  "auth/updateBoard",
+  async (payload, thunkApi) => {
+    try {
+      return await boardService.updateBoard(payload);
+    } catch (error) {
+      const message =
+        error.response.data.error ||
+        error.response.data.message ||
+        error.response.data.data;
+
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 const boardSlice = createSlice({
   name: "board",
   initialState,
@@ -124,9 +141,24 @@ const boardSlice = createSlice({
         state.defaultBoard.isLoading = false;
         state.defaultBoard.isSuccess = true;
         state.defaultBoard.isError = false;
-        // console.log(payload);
       })
       .addCase(deleteBoard.rejected, (state, { payload }) => {
+        state.defaultBoard.isSuccess = false;
+        state.defaultBoard.isLoading = false;
+        state.defaultBoard.isError = true;
+        state.defaultBoard.message = payload;
+      })
+
+      // update board
+      .addCase(updateBoard.pending, (state) => {
+        state.defaultBoard.isLoading = true;
+      })
+      .addCase(updateBoard.fulfilled, (state, { payload }) => {
+        state.defaultBoard.isLoading = false;
+        state.defaultBoard.isSuccess = true;
+        state.defaultBoard.isError = false;
+      })
+      .addCase(updateBoard.rejected, (state, { payload }) => {
         state.defaultBoard.isSuccess = false;
         state.defaultBoard.isLoading = false;
         state.defaultBoard.isError = true;
