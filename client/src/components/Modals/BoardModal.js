@@ -16,7 +16,7 @@ import {
   fetchAllBoards,
 } from "../../redux/features/board/boardSlice";
 
-const BoardModal = ({ setShowBoardModal, isNew }) => {
+const BoardModal = ({ setShowBoardModal, isNew, board }) => {
   const dispatch = useDispatch();
   const { isError, message, isSuccess, isLoading } = useSelector(
     (state) => state.board.defaultBoard
@@ -34,6 +34,7 @@ const BoardModal = ({ setShowBoardModal, isNew }) => {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(boardSchema),
@@ -44,8 +45,15 @@ const BoardModal = ({ setShowBoardModal, isNew }) => {
     name: "columns",
   });
 
+  useEffect(() => {
+    if (!isNew && board) {
+      setValue("name", board.name);
+      setValue("columns", board.columns);
+    }
+  }, []);
+
   const formSubmit = (formData) => {
-    // console.log(formData);
+    console.log(formData);
     if (isNew) {
       dispatch(createNewBoard(formData));
     }
