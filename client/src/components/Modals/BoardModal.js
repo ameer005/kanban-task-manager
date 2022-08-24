@@ -20,7 +20,7 @@ import {
 const BoardModal = ({ setShowBoardModal, isNew, board }) => {
   const dispatch = useDispatch();
   const { isError, message, isSuccess, isLoading } = useSelector(
-    (state) => state.board.defaultBoard
+    (state) => state.board.createAndUpdateBoard
   );
 
   useEffect(() => {

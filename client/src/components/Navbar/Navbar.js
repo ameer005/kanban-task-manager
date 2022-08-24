@@ -9,7 +9,7 @@ import BoardModal from "../Modals/BoardModal";
 import DeleteModal from "../Modals/DeleteModal";
 import {
   deleteBoard,
-  resetCreateUpdateBoard,
+  resetDeleteBoard,
   fetchAllBoards,
 } from "../../redux/features/board/boardSlice";
 
@@ -24,7 +24,7 @@ const Navbar = ({ showSidebar }) => {
   // const [pathname, setPathName] = useState(window.location.pathname);
   const { id } = useParams();
   const { isSuccess, isError, isLoading, message } = useSelector(
-    (state) => state.board.defaultBoard
+    (state) => state.board.deleteBoard
   );
   const board = useSelector((state) =>
     state.board.fetchAllBoards.boardsList.find((el) => el._id === id)
@@ -49,7 +49,7 @@ const Navbar = ({ showSidebar }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(resetCreateUpdateBoard());
+      dispatch(resetDeleteBoard());
       dispatch(fetchAllBoards());
       navigate("/");
     }

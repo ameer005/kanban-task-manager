@@ -9,7 +9,13 @@ const initialState = {
     isLoading: false,
     message: "",
   },
-  defaultBoard: {
+  createAndUpdateBoard: {
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: "",
+  },
+  deleteBoard: {
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -90,10 +96,16 @@ const boardSlice = createSlice({
   initialState,
   reducers: {
     resetCreateUpdateBoard: (state) => {
-      state.defaultBoard.isSuccess = false;
-      state.defaultBoard.isLoading = false;
-      state.defaultBoard.isError = false;
-      state.defaultBoard.message = "";
+      state.createAndUpdateBoard.isSuccess = false;
+      state.createAndUpdateBoard.isLoading = false;
+      state.createAndUpdateBoard.isError = false;
+      state.createAndUpdateBoard.message = "";
+    },
+    resetDeleteBoard: (state) => {
+      state.deleteBoard.isSuccess = false;
+      state.deleteBoard.isLoading = false;
+      state.deleteBoard.isError = false;
+      state.deleteBoard.message = "";
     },
   },
   extraReducers: (builder) => {
@@ -118,55 +130,55 @@ const boardSlice = createSlice({
 
       // Create new board
       .addCase(createNewBoard.pending, (state) => {
-        state.defaultBoard.isLoading = true;
+        state.createAndUpdateBoard.isLoading = true;
       })
       .addCase(createNewBoard.fulfilled, (state, { payload }) => {
-        state.defaultBoard.isLoading = false;
-        state.defaultBoard.isSuccess = true;
-        state.defaultBoard.isError = false;
+        state.createAndUpdateBoard.isLoading = false;
+        state.createAndUpdateBoard.isSuccess = true;
+        state.createAndUpdateBoard.isError = false;
         // console.log(payload);
       })
       .addCase(createNewBoard.rejected, (state, { payload }) => {
-        state.defaultBoard.isSuccess = false;
-        state.defaultBoard.isLoading = false;
-        state.defaultBoard.isError = true;
-        state.defaultBoard.message = payload;
-      })
-
-      // delete board
-      .addCase(deleteBoard.pending, (state) => {
-        state.defaultBoard.isLoading = true;
-      })
-      .addCase(deleteBoard.fulfilled, (state, { payload }) => {
-        state.defaultBoard.isLoading = false;
-        state.defaultBoard.isSuccess = true;
-        state.defaultBoard.isError = false;
-      })
-      .addCase(deleteBoard.rejected, (state, { payload }) => {
-        state.defaultBoard.isSuccess = false;
-        state.defaultBoard.isLoading = false;
-        state.defaultBoard.isError = true;
-        state.defaultBoard.message = payload;
+        state.createAndUpdateBoard.isSuccess = false;
+        state.createAndUpdateBoard.isLoading = false;
+        state.createAndUpdateBoard.isError = true;
+        state.createAndUpdateBoard.message = payload;
       })
 
       // update board
       .addCase(updateBoard.pending, (state) => {
-        state.defaultBoard.isLoading = true;
+        state.createAndUpdateBoard.isLoading = true;
       })
       .addCase(updateBoard.fulfilled, (state, { payload }) => {
-        state.defaultBoard.isLoading = false;
-        state.defaultBoard.isSuccess = true;
-        state.defaultBoard.isError = false;
+        state.createAndUpdateBoard.isLoading = false;
+        state.createAndUpdateBoard.isSuccess = true;
+        state.createAndUpdateBoard.isError = false;
       })
       .addCase(updateBoard.rejected, (state, { payload }) => {
-        state.defaultBoard.isSuccess = false;
-        state.defaultBoard.isLoading = false;
-        state.defaultBoard.isError = true;
-        state.defaultBoard.message = payload;
+        state.createAndUpdateBoard.isSuccess = false;
+        state.createAndUpdateBoard.isLoading = false;
+        state.createAndUpdateBoard.isError = true;
+        state.createAndUpdateBoard.message = payload;
+      })
+
+      // delete board
+      .addCase(deleteBoard.pending, (state) => {
+        state.deleteBoard.isLoading = true;
+      })
+      .addCase(deleteBoard.fulfilled, (state, { payload }) => {
+        state.deleteBoard.isLoading = false;
+        state.deleteBoard.isSuccess = true;
+        state.deleteBoard.isError = false;
+      })
+      .addCase(deleteBoard.rejected, (state, { payload }) => {
+        state.deleteBoard.isSuccess = false;
+        state.deleteBoard.isLoading = false;
+        state.deleteBoard.isError = true;
+        state.deleteBoard.message = payload;
       });
   },
 });
 
-export const { resetCreateUpdateBoard } = boardSlice.actions;
+export const { resetCreateUpdateBoard, resetDeleteBoard } = boardSlice.actions;
 
 export default boardSlice.reducer;
