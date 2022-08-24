@@ -28,3 +28,18 @@ export const boardSchema = yup
     ),
   })
   .required();
+
+export const taskSchema = yup
+  .object()
+  .shape({
+    title: yup.string().required("Board name cannot be empty"),
+    description: yup.string(),
+    status: yup.string().required(),
+    subTasks: yup.array().of(
+      yup.object().shape({
+        name: yup.string().required("column name cannot be empty"),
+        isCompleted: yup.boolean(),
+      })
+    ),
+  })
+  .required();

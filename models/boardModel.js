@@ -18,6 +18,10 @@ const taskSchema = new mongoose.Schema({
     required: ["true", "Please provide title"],
   },
   description: String,
+  status: {
+    type: String,
+    required: ["true", "Please provide task status"],
+  },
   subTasks: [subTaskSchema],
 });
 

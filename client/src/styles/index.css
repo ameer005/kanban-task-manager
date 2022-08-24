@@ -43,3 +43,15 @@
 .overlay {
   @apply after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-colorPrimary/60 after:opacity-0 after:transition-all after:duration-200;
 }
+
+.scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: #20212c;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3e3f4e;
+  border: 3px solid #20212c;
+  border-radius: 10px;
+}

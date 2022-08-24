@@ -103,7 +103,7 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
                     <label>
                       <input
                         placeholder="e.g. Todo"
-                        type="e.g. Todo"
+                        type="text"
                         name={`columns.${index}.name`}
                         className={`input ${
                           errors.columns

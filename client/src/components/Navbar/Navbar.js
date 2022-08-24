@@ -6,6 +6,7 @@ import { MdMoreVert } from "react-icons/md";
 import logoDark from "../../assets/logo-light.svg";
 
 import BoardModal from "../Modals/BoardModal";
+import TaskModal from "../Modals/TaskModal";
 import DeleteModal from "../Modals/DeleteModal";
 import {
   deleteBoard,
@@ -21,6 +22,7 @@ const Navbar = ({ showSidebar }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showBoardModal, setShowBoardModal] = useState(false);
+  const [showTaskModal, setShowTaskModal] = useState(false);
   // const [pathname, setPathName] = useState(window.location.pathname);
   const { id } = useParams();
   const { isSuccess, isError, isLoading, message } = useSelector(
@@ -70,7 +72,12 @@ const Navbar = ({ showSidebar }) => {
 
       {window.location.pathname !== "/" && (
         <section className="flex items-center gap-2 py-7">
-          <button className="btn-primary px-4 text-sm">+ Add new task</button>
+          <button
+            onClick={() => setShowTaskModal(true)}
+            className="btn-primary px-4 text-sm"
+          >
+            + Add new task
+          </button>
 
           <div className="cursor-pointer relative">
             <div
@@ -118,6 +125,9 @@ const Navbar = ({ showSidebar }) => {
           setShowBoardModal={setShowBoardModal}
           board={board}
         />
+      )}
+      {showTaskModal && (
+        <TaskModal isNew={true} setShowTaskModal={setShowTaskModal} />
       )}
     </main>
   );
