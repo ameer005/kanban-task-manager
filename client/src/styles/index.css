@@ -39,3 +39,7 @@
 .shadow-ut {
   box-shadow: 0px 5px 15px rgb(99, 95, 199, 0.2);
 }
+
+.overlay {
+  @apply after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-colorPrimary/60 after:opacity-0 after:transition-all after:duration-200;
+}
