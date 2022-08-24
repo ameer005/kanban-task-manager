@@ -81,8 +81,6 @@ exports.updateBoard = catchAsync(async (req, res, next) => {
 
 // TASKS AND SUB TASKS
 exports.createTask = catchAsync(async (req, res, next) => {
-  console.log(req.body);
-
   const board = await Board.findById(req.params.id);
 
   if (!board) {
@@ -101,11 +99,40 @@ exports.createTask = catchAsync(async (req, res, next) => {
 
   const updatedBoard = await board.save();
 
-  console.log(updatedBoard);
   res.status(200).json({
     status: "success",
     data: {
       updatedBoard,
     },
+  });
+});
+
+exports.deleteTask = catchAsync(async (req, res, next) => {
+  const { columnId, taskId } = req.body;
+
+  const board = await Board.findById(req.params.id);
+
+  if (!board) {
+    return next(new AppError("No document found with this board id", 404));
+  }
+
+  const columnToUpdate = board.columns.find(
+    (column) => column._id.toString() === columnId
+  );
+
+  if (!columnToUpdate) {
+    return next(new AppError("No document found with this column id", 404));
+  }
+
+  const taskIndex = columnToUpdate.tasks.findIndex(
+    (task) => task._id.toString() === taskId
+  );
+
+  columnToUpdate.tasks.splice(taskIndex, 1);
+
+  board.save();
+  res.status(204).json({
+    status: "success",
+    data: null,
   });
 });

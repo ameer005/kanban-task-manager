@@ -21,6 +21,12 @@ const initialState = {
     isLoading: false,
     message: "",
   },
+  createAndUpdateTask: {
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: "",
+  },
 };
 
 // fetch all boards
@@ -91,6 +97,23 @@ export const updateBoard = createAsyncThunk(
   }
 );
 
+// create task
+export const createTask = createAsyncThunk(
+  "auth/createTask",
+  async (payload, thunkApi) => {
+    try {
+      return await boardService.createTask(payload);
+    } catch (error) {
+      const message =
+        error.response.data.error ||
+        error.response.data.message ||
+        error.response.data.data;
+
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 const boardSlice = createSlice({
   name: "board",
   initialState,
@@ -106,6 +129,13 @@ const boardSlice = createSlice({
       state.deleteBoard.isLoading = false;
       state.deleteBoard.isError = false;
       state.deleteBoard.message = "";
+    },
+
+    resetCreateTask: (state) => {
+      state.createAndUpdateTask.isSuccess = false;
+      state.createAndUpdateTask.isLoading = false;
+      state.createAndUpdateTask.isError = false;
+      state.createAndUpdateTask.message = "";
     },
   },
   extraReducers: (builder) => {
@@ -175,10 +205,27 @@ const boardSlice = createSlice({
         state.deleteBoard.isLoading = false;
         state.deleteBoard.isError = true;
         state.deleteBoard.message = payload;
+      })
+
+      // create task
+      .addCase(createTask.pending, (state) => {
+        state.createAndUpdateTask.isLoading = true;
+      })
+      .addCase(createTask.fulfilled, (state, { payload }) => {
+        state.createAndUpdateTask.isLoading = false;
+        state.createAndUpdateTask.isSuccess = true;
+        state.createAndUpdateTask.isError = false;
+      })
+      .addCase(createTask.rejected, (state, { payload }) => {
+        state.createAndUpdateTask.isSuccess = false;
+        state.createAndUpdateTask.isLoading = false;
+        state.createAndUpdateTask.isError = true;
+        state.createAndUpdateTask.message = payload;
       });
   },
 });
 
-export const { resetCreateUpdateBoard, resetDeleteBoard } = boardSlice.actions;
+export const { resetCreateUpdateBoard, resetDeleteBoard, resetCreateTask } =
+  boardSlice.actions;
 
 export default boardSlice.reducer;

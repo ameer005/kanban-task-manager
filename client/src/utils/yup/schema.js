@@ -37,7 +37,7 @@ export const taskSchema = yup
     status: yup.string().required(),
     subTasks: yup.array().of(
       yup.object().shape({
-        name: yup.string().required("column name cannot be empty"),
+        title: yup.string().required("column name cannot be empty"),
         isCompleted: yup.boolean(),
       })
     ),

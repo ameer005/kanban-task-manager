@@ -28,11 +28,19 @@ const updateBoard = async (payload) => {
   return data;
 };
 
+// Update Board
+const createTask = async (payload) => {
+  const { data } = await api.post(`/boards/${payload.id}/task`, payload.data);
+
+  return data;
+};
+
 const baordService = {
   fetchAllBoards,
   createNewBoard,
   deleteBoard,
   updateBoard,
+  createTask,
 };
 
 export default baordService;

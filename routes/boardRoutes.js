@@ -17,6 +17,9 @@ router
   .delete(boardController.deleteBoard)
   .patch(boardController.updateBoard);
 
-router.route("/:id/task").post(boardController.createTask);
+router
+  .route("/:id/task")
+  .post(boardController.createTask)
+  .delete(boardController.deleteTask);
 
 module.exports = router;

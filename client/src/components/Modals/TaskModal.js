@@ -11,6 +11,11 @@ import { taskSchema } from "../../utils/yup/schema";
 import InputField from "../FormComps/InputField";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import SelectField from "../FormComps/SelectField";
+import {
+  createTask,
+  resetCreateTask,
+  fetchAllBoards,
+} from "../../redux/features/board/boardSlice";
 
 const TaskModal = ({ setShowTaskModal, isNew, task }) => {
   const dispatch = useDispatch();
@@ -22,6 +27,18 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
   const [selectStatusText, setSelectStatusText] = useState(
     board?.columns[0].name || "Select Status"
   );
+
+  const { isError, message, isSuccess, isLoading } = useSelector(
+    (state) => state.board.createAndUpdateTask
+  );
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(resetCreateTask());
+      dispatch(fetchAllBoards());
+      setShowTaskModal(false);
+    }
+  }, [isError, isSuccess, message]);
 
   const {
     register,
@@ -55,8 +72,7 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
         data: { ...formData },
       };
 
-      console.log(payload);
-      // dispatch(createNewBoard(formData));
+      dispatch(createTask(payload));
     } else {
       // const payload = {
       //   id: board._id,
@@ -141,13 +157,13 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
                       <input
                         placeholder=""
                         type="text"
-                        name={`subTasks.${index}.name`}
+                        name={`subTasks.${index}.title`}
                         className={`input ${
                           errors.subTasks
                             ? "border-red-500"
                             : "border-colorPrimaryLight2"
                         }`}
-                        {...register(`subTasks.${index}.name`)}
+                        {...register(`subTasks.${index}.title`)}
                       />
                     </label>
                   </div>
@@ -162,7 +178,7 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
             <button
               className="text-sm bg-colorNeutral rounded-full text-colorpurple ut-animation font-bold py-[11px] w-full"
               type="button"
-              onClick={() => append({ name: "", isCompleted: false })}
+              onClick={() => append({ title: "", isCompleted: false })}
             >
               + Add New Subtask
             </button>
@@ -176,7 +192,7 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
           />
 
           <button type={"submit"} className="btn-primary text-sm">
-            {false ? (
+            {isLoading ? (
               <LoadingSpinner />
             ) : isNew ? (
               "Create Task"
