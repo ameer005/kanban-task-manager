@@ -48,17 +48,22 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
   }, []);
 
   const formSubmit = (formData) => {
-    console.log(formData);
-    // if (isNew) {
-    //   dispatch(createNewBoard(formData));
-    // } else {
-    //   const payload = {
-    //     id: board._id,
-    //     data: { ...formData },
-    //   };
+    // console.log(formData);
+    if (isNew) {
+      const payload = {
+        id: id,
+        data: { ...formData },
+      };
 
-    //   dispatch(updateBoard(payload));
-    // }
+      console.log(payload);
+      // dispatch(createNewBoard(formData));
+    } else {
+      // const payload = {
+      //   id: board._id,
+      //   data: { ...formData },
+      // };
+      // dispatch(updateBoard(payload));
+    }
   };
 
   const statusNameList = () => {

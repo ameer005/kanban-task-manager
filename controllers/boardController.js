@@ -78,3 +78,34 @@ exports.updateBoard = catchAsync(async (req, res, next) => {
     },
   });
 });
+
+// TASKS AND SUB TASKS
+exports.createTask = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+
+  const board = await Board.findById(req.params.id);
+
+  if (!board) {
+    return next(new AppError("No document found with this id", 404));
+  }
+
+  const columnToUpdate = board.columns.find(
+    (column) => column._id.toString() === req.body.status
+  );
+
+  if (!columnToUpdate) {
+    return next(new AppError("No document found with this id", 404));
+  }
+
+  columnToUpdate.tasks.push(req.body);
+
+  const updatedBoard = await board.save();
+
+  console.log(updatedBoard);
+  res.status(200).json({
+    status: "success",
+    data: {
+      updatedBoard,
+    },
+  });
+});
