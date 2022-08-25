@@ -136,3 +136,38 @@ exports.deleteTask = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.updateTask = catchAsync(async (req, res, next) => {
+  const { columnId, taskId, task } = req.body;
+
+  const board = await Board.findById(req.params.id);
+
+  if (!board) {
+    return next(new AppError("No document found with this board id", 404));
+  }
+
+  const columnToUpdate = board.columns.find(
+    (column) => column._id.toString() === columnId
+  );
+
+  if (!columnToUpdate) {
+    return next(new AppError("No document found with this column id", 404));
+  }
+
+  const taskToUpdate = columnToUpdate.tasks.find(
+    (task) => task._id.toString() === taskId
+  );
+
+  taskToUpdate.title = task.title;
+  taskToUpdate.subTasks = task.subTasks;
+  taskToUpdate.description = task.description;
+
+  const updatedBoard = await board.save();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      board: updatedBoard,
+    },
+  });
+});

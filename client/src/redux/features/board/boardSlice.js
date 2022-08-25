@@ -27,6 +27,12 @@ const initialState = {
     isLoading: false,
     message: "",
   },
+  deleteTask: {
+    isError: false,
+    isSuccess: false,
+    isLoading: false,
+    message: "",
+  },
 };
 
 // fetch all boards
@@ -114,6 +120,38 @@ export const createTask = createAsyncThunk(
   }
 );
 
+export const deleteTask = createAsyncThunk(
+  "auth/deleteTask",
+  async (payload, thunkApi) => {
+    try {
+      return await boardService.deleteTask(payload);
+    } catch (error) {
+      const message =
+        error.response.data.error ||
+        error.response.data.message ||
+        error.response.data.data;
+
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
+export const updateTask = createAsyncThunk(
+  "auth/updateTask",
+  async (payload, thunkApi) => {
+    try {
+      return await boardService.updateTask(payload);
+    } catch (error) {
+      const message =
+        error.response.data.error ||
+        error.response.data.message ||
+        error.response.data.data;
+
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+
 const boardSlice = createSlice({
   name: "board",
   initialState,
@@ -136,6 +174,12 @@ const boardSlice = createSlice({
       state.createAndUpdateTask.isLoading = false;
       state.createAndUpdateTask.isError = false;
       state.createAndUpdateTask.message = "";
+    },
+    resetDeletetask: (state) => {
+      state.deleteTask.isSuccess = false;
+      state.deleteTask.isLoading = false;
+      state.deleteTask.isError = false;
+      state.deleteTask.message = "";
     },
   },
   extraReducers: (builder) => {
@@ -221,11 +265,47 @@ const boardSlice = createSlice({
         state.createAndUpdateTask.isLoading = false;
         state.createAndUpdateTask.isError = true;
         state.createAndUpdateTask.message = payload;
+      })
+
+      // Update board
+      .addCase(updateTask.pending, (state) => {
+        state.createAndUpdateTask.isLoading = true;
+      })
+      .addCase(updateTask.fulfilled, (state, { payload }) => {
+        state.createAndUpdateTask.isLoading = false;
+        state.createAndUpdateTask.isSuccess = true;
+        state.createAndUpdateTask.isError = false;
+      })
+      .addCase(updateTask.rejected, (state, { payload }) => {
+        state.createAndUpdateTask.isSuccess = false;
+        state.createAndUpdateTask.isLoading = false;
+        state.createAndUpdateTask.isError = true;
+        state.createAndUpdateTask.message = payload;
+      })
+
+      // delete task
+      .addCase(deleteTask.pending, (state) => {
+        state.deleteTask.isLoading = true;
+      })
+      .addCase(deleteTask.fulfilled, (state, { payload }) => {
+        state.deleteTask.isLoading = false;
+        state.deleteTask.isSuccess = true;
+        state.deleteTask.isError = false;
+      })
+      .addCase(deleteTask.rejected, (state, { payload }) => {
+        state.deleteTask.isSuccess = false;
+        state.deleteTask.isLoading = false;
+        state.deleteTask.isError = true;
+        state.deleteTask.message = payload;
       });
   },
 });
 
-export const { resetCreateUpdateBoard, resetDeleteBoard, resetCreateTask } =
-  boardSlice.actions;
+export const {
+  resetCreateUpdateBoard,
+  resetDeleteBoard,
+  resetCreateTask,
+  resetDeletetask,
+} = boardSlice.actions;
 
 export default boardSlice.reducer;

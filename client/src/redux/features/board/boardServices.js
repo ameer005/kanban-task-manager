@@ -28,9 +28,23 @@ const updateBoard = async (payload) => {
   return data;
 };
 
-// Update Board
+// Create task
 const createTask = async (payload) => {
   const { data } = await api.post(`/boards/${payload.id}/task`, payload.data);
+
+  return data;
+};
+
+// delete task
+const deleteTask = async (payload) => {
+  const { data } = await api.delete(`/boards/${payload.id}/task`, payload.data);
+
+  return data;
+};
+
+// update task
+const updateTask = async (payload) => {
+  const { data } = await api.patch(`/boards/${payload.id}/task`, payload.data);
 
   return data;
 };
@@ -41,6 +55,8 @@ const baordService = {
   deleteBoard,
   updateBoard,
   createTask,
+  deleteTask,
+  updateTask,
 };
 
 export default baordService;
