@@ -10,7 +10,7 @@ const SharedLayout = () => {
   const [showSidebar, setShowSidebar] = useState(true);
 
   return (
-    <main className="bg-colorPrimary min-h-screen">
+    <main className="bg-colorPrimary">
       <Navbar showSidebar={showSidebar} />
 
       <section className="flex h-full ">

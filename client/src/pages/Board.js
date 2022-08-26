@@ -17,7 +17,9 @@ const Board = () => {
   };
 
   return (
-    <main className="flex gap-8 w-full px-8 py-6 ">{renderColumnsList()}</main>
+    <main className="flex gap-8 w-full sidebar-h  px-8 py-6 overflow-scroll scrollbar-big">
+      {renderColumnsList()}
+    </main>
   );
 };
 
