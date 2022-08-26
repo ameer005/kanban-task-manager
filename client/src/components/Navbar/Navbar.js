@@ -67,7 +67,9 @@ const Navbar = ({ showSidebar }) => {
         >
           <img src={logoDark} alt="logo" />
         </div>
-        <h3 className="text-2xl  py-7 font-bold">{board?.name || "Board"}</h3>
+        <h3 className="text-2xl  py-7 font-bold w-[30%] whitespace-nowrap overflow-hidden text-ellipsis">
+          {board?.name || "Board"}
+        </h3>
       </section>
 
       {window.location.pathname !== "/" && (

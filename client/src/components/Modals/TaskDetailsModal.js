@@ -96,14 +96,11 @@ const TaskDetailsModal = ({
   });
 
   const formSubmit = (formData) => {
-    // console.log(formData);
-
     if (formData.status === task.status) {
       const payload = {
         id: id,
         data: { columnId: task.status, taskId: task._id, task: formData },
       };
-      // console.log(payload);
 
       dispatch(updateTask(payload));
     } else {
@@ -121,7 +118,11 @@ const TaskDetailsModal = ({
       };
 
       dispatch(deleteTask(deletePyaload));
-      dispatch(createTask(payload));
+
+      setTimeout(() => {
+        dispatch(createTask(payload));
+      }, 200);
+      // dispatch(createTask(payload));
     }
   };
 

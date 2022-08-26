@@ -24,9 +24,11 @@ const Task = ({ data }) => {
 
   useEffect(() => {
     if (isSuccess) {
-      dispatch(resetDeletetask());
-      dispatch(fetchAllBoards());
-      setShowDeleteModal(false);
+      if (showDeleteModal) {
+        dispatch(resetDeletetask());
+        dispatch(fetchAllBoards());
+        setShowDeleteModal(false);
+      }
     }
   }, [isError, isSuccess, isLoading, message]);
 

@@ -1,16 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Task from "../Task/Task";
 
-import TaskDetailsModal from "../Modals/TaskDetailsModal";
-import DeleteModal from "../Modals/DeleteModal";
-import TaskModal from "../Modals/TaskModal";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import {
-  fetchAllBoards,
-  resetDeletetask,
-  deleteTask,
-} from "../../redux/features/board/boardSlice";
 import { useParams } from "react-router-dom";
 
 const Column = ({ data }) => {
