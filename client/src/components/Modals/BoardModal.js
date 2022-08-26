@@ -74,15 +74,22 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md modal-height "
       >
-        <h3 className="text-lg font-bold mb-6">
-          {isNew ? "Add New Board" : "Edit Board"}
-        </h3>
+        <div className="flex items-start justify-between">
+          <h3 className="text-lg font-bold mb-6">
+            {isNew ? "Add New Board" : "Edit Board"}
+          </h3>
+
+          <IoClose
+            onClick={() => setShowBoardModal(false)}
+            className="h-6 w-6 cursor-pointer"
+          />
+        </div>
 
         <form
           onSubmit={handleSubmit(formSubmit)}
-          className="flex flex-col gap-6"
+          className="flex flex-col gap-6 "
         >
           <InputField
             errors={errors}
@@ -93,7 +100,7 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
             placeHolder="e.g. Web Design"
           />
 
-          <div>
+          <div className="modal-overflow">
             <h3 className="mb-2 text-sm font-bold">Board Columns</h3>
 
             <div className="flex flex-col gap-2 mb-4">

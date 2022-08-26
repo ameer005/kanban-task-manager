@@ -35,7 +35,7 @@
 }
 
 .sidebar-h {
-  height: calc(100vh - 99px);
+  height: calc(100vh - 89px);
 }
 
 .shadow-ut {
@@ -68,4 +68,24 @@
   background-color: #3e3f4e;
   border: 3px solid #20212c;
   border-radius: 10px;
+}
+
+.scrollbar-modal::-webkit-scrollbar {
+  width: 10px;
+}
+.scrollbar-modal::-webkit-scrollbar-track {
+  background: #2b2c37;
+}
+.scrollbar-modal::-webkit-scrollbar-thumb {
+  background-color: #3e3f4e;
+  border: 3px solid #2b2c37;
+  border-radius: 10px;
+}
+
+.modal-overflow {
+  @apply max-h-[40vh] overflow-y-scroll scrollbar-modal;
+}
+
+.modal-height {
+  @apply max-h-[75vh] overflow-y-hidden;
 }

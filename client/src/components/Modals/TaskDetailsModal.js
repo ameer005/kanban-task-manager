@@ -156,7 +156,8 @@ const TaskDetailsModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md"
+        // onClick={() => setShowTaskDetailsModal(false)}
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md modal-height"
       >
         <header className="mb-8">
           <div className="flex items-start justify-between mb-4">
@@ -246,6 +247,13 @@ const TaskDetailsModal = ({
 
           <button type={"submit"} className="btn-primary text-sm">
             {isLoading ? <LoadingSpinner /> : "Save Changes"}
+          </button>
+          <button
+            onClick={() => setShowTaskDetailsModal(false)}
+            className="text-sm -mt-3 bg-colorNeutral rounded-full text-colorpurple ut-animation font-bold py-[10px] w-full"
+            type="button"
+          >
+            Cancel
           </button>
         </form>
       </div>

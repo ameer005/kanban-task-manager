@@ -139,11 +139,17 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md max-h-[78vh] overflow-y-scroll scrollbar-modal"
       >
-        <h3 className="text-lg font-bold mb-6">
-          {isNew ? "Add New Task" : "Edit Task"}
-        </h3>
+        <div className="flex items-start justify-between">
+          <h3 className="text-lg font-bold mb-6">
+            {isNew ? "Add New Task" : "Edit Task"}
+          </h3>
+          <IoClose
+            onClick={() => setShowTaskModal(false)}
+            className="h-6 w-6 cursor-pointer"
+          />
+        </div>
 
         <form
           onSubmit={handleSubmit(formSubmit)}
@@ -172,7 +178,7 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
             />
           </label>
 
-          <div>
+          <div className="">
             <h3 className="mb-2 text-sm font-bold">Subtasks</h3>
 
             <div className="flex flex-col gap-2 mb-4">

@@ -14,23 +14,8 @@ import {
 import { useParams } from "react-router-dom";
 
 const Column = ({ data }) => {
-  const [showTaskDetailsModal, setShowTaskDetailsModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showTaskModal, setShowTaskModal] = useState(false);
-
-  const { isSuccess, isError, isLoading, message } = useSelector(
-    (state) => state.board.deleteTask
-  );
   const dispatch = useDispatch();
   const { id } = useParams();
-
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(resetDeletetask());
-      dispatch(fetchAllBoards());
-      setShowDeleteModal(false);
-    }
-  }, [isError, isSuccess, isLoading, message]);
 
   const randomColorPicker = () => {
     const colors = [
@@ -51,43 +36,7 @@ const Column = ({ data }) => {
     return data.tasks.map((task) => {
       return (
         <div key={task._id}>
-          <div onClick={() => setShowTaskDetailsModal(true)}>
-            <Task
-              data={task}
-              setShowTaskDetailsModal={setShowTaskDetailsModal}
-            />
-          </div>
-          {showTaskDetailsModal && (
-            <TaskDetailsModal
-              task={task}
-              setShowTaskDetailsModal={setShowTaskDetailsModal}
-              setShowDeleteModal={setShowDeleteModal}
-              setShowTaskModal={setShowTaskModal}
-            />
-          )}
-          {showDeleteModal && (
-            <DeleteModal
-              action={deleteTask}
-              deletePyaload={{
-                id: id,
-                data: {
-                  taskId: task._id,
-                  columnId: task.status,
-                },
-              }}
-              id={id}
-              heading="Task"
-              setShowDeleteModal={setShowDeleteModal}
-              isLoading={isLoading}
-            />
-          )}
-          {showTaskModal && (
-            <TaskModal
-              isNew={false}
-              setShowTaskModal={setShowTaskModal}
-              task={task}
-            />
-          )}
+          <Task data={task} />
         </div>
       );
     });
