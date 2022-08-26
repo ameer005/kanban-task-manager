@@ -1,7 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Task from "../Task/Task";
 
+import TaskDetailsModal from "../Modals/TaskDetailsModal";
+import DeleteModal from "../Modals/DeleteModal";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchAllBoards,
+  resetDeletetask,
+  deleteTask,
+} from "../../redux/features/board/boardSlice";
+import { useParams } from "react-router-dom";
+
 const Column = ({ data }) => {
+  const [showTaskDetailsModal, setShowTaskDetailsModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const { isSuccess, isError, isLoading, message } = useSelector(
+    (state) => state.board.deleteTask
+  );
+  const dispatch = useDispatch();
+  const { id } = useParams();
+
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(resetDeletetask());
+      dispatch(fetchAllBoards());
+      setShowDeleteModal(false);
+    }
+  }, [isError, isSuccess, isLoading, message]);
+
   const randomColorPicker = () => {
     const colors = [
       "bg-colorpurple",
@@ -19,7 +46,39 @@ const Column = ({ data }) => {
 
   const renderTaskList = () => {
     return data.tasks.map((task) => {
-      return <Task key={task._id} data={task} />;
+      return (
+        <div key={task._id}>
+          <div onClick={() => setShowTaskDetailsModal(true)}>
+            <Task
+              data={task}
+              setShowTaskDetailsModal={setShowTaskDetailsModal}
+            />
+          </div>
+          {showTaskDetailsModal && (
+            <TaskDetailsModal
+              task={task}
+              setShowTaskDetailsModal={setShowTaskDetailsModal}
+              setShowDeleteModal={setShowDeleteModal}
+            />
+          )}
+          {showDeleteModal && (
+            <DeleteModal
+              action={deleteTask}
+              deletePyaload={{
+                id: id,
+                data: {
+                  taskId: task._id,
+                  columnId: task.status,
+                },
+              }}
+              id={id}
+              heading="Task"
+              setShowDeleteModal={setShowDeleteModal}
+              isLoading={isLoading}
+            />
+          )}
+        </div>
+      );
     });
   };
 

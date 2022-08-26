@@ -37,7 +37,8 @@ const createTask = async (payload) => {
 
 // delete task
 const deleteTask = async (payload) => {
-  const { data } = await api.delete(`/boards/${payload.id}/task`, payload.data);
+  console.log(payload.data);
+  const { data } = await api.put(`/boards/${payload.id}/task`, payload.data);
 
   return data;
 };

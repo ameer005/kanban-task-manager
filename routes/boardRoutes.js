@@ -20,7 +20,9 @@ router
 router
   .route("/:id/task")
   .post(boardController.createTask)
-  .delete(boardController.deleteTask)
+  .put(boardController.deleteTask)
   .patch(boardController.updateTask);
+
+router.route("/:id/task/delete").patch(boardController.deleteTask);
 
 module.exports = router;

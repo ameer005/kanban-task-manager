@@ -9,7 +9,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchAllBoards());
-  }, []);
+  }, [dispatch]);
 
   return (
     <main className=" text-colorNeutral text-xs">

@@ -9,6 +9,7 @@ const DeleteModal = ({
   id,
   action,
   isLoading,
+  deletePyaload,
 }) => {
   const dispatch = useDispatch();
 
@@ -31,7 +32,9 @@ const DeleteModal = ({
             all columns and tasks and cannot be reversed.`}
           </p>
           <button
-            onClick={() => dispatch(action(id))}
+            onClick={() =>
+              dispatch(action(heading === "Task" ? deletePyaload : id))
+            }
             className="text-sm bg-colorRed hover:bg-colorLightRed rounded-full  ut-animation font-bold py-[10px] w-full"
             type="button"
           >
