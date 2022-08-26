@@ -25,6 +25,7 @@ const TaskDetailsModal = ({
   setShowTaskDetailsModal,
   task,
   setShowDeleteModal,
+  setShowTaskModal,
 }) => {
   const dispatch = useDispatch();
   const menuRef = useRef();
@@ -174,7 +175,10 @@ const TaskDetailsModal = ({
                   className="absolute right-[1rem] text-sm -bottom-[6rem] bg-colorPrimaryLight w-[10rem] p-4 rounded-md shadow-ut"
                 >
                   <button
-                    // onClick={() => setShowBoardModal(true)}
+                    onClick={() => {
+                      setShowTaskModal(true);
+                      setShowTaskDetailsModal(false);
+                    }}
                     className="text-colorMediumGray  font-medium mb-3"
                   >
                     Edit Task
@@ -220,7 +224,7 @@ const TaskDetailsModal = ({
                         className="w-4 h-4 bg-gray-100 rounded border-gray-300 peer"
                       />
                       <div className="ml-2 text-xs font-bold  peer-checked:line-through peer-checked:text-colorNeutral2">
-                        Default checkbox
+                        {subTask.title}
                       </div>
                     </label>
                   </div>

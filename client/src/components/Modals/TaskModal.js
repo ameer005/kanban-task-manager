@@ -15,6 +15,8 @@ import {
   createTask,
   resetCreateTask,
   fetchAllBoards,
+  updateTask,
+  deleteTask,
 } from "../../redux/features/board/boardSlice";
 
 const TaskModal = ({ setShowTaskModal, isNew, task }) => {
@@ -55,10 +57,16 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
     name: "subTasks",
   });
 
+  const activeStatus = board.columns.find(
+    (column) => column._id === task?.status
+  );
+
   useEffect(() => {
     if (!isNew && task) {
-      setValue("name", task.name);
-      setValue("columns", task.subTasks);
+      setValue("title", task.title);
+      setValue("subTasks", task.subTasks);
+      setValue("status", task.status);
+      setSelectStatusText(activeStatus.name);
     } else {
       setValue("status", board?.columns[0]._id);
     }
@@ -73,12 +81,30 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
       };
 
       dispatch(createTask(payload));
+    } else if (formData.status === task.status) {
+      const payload = {
+        id: id,
+        data: { columnId: task.status, taskId: task._id, task: formData },
+      };
+      // console.log(payload);
+
+      dispatch(updateTask(payload));
     } else {
-      // const payload = {
-      //   id: board._id,
-      //   data: { ...formData },
-      // };
-      // dispatch(updateBoard(payload));
+      const deletePyaload = {
+        id: id,
+        data: {
+          taskId: task._id,
+          columnId: task.status,
+        },
+      };
+
+      const payload = {
+        id: id,
+        data: { ...formData },
+      };
+
+      dispatch(deleteTask(deletePyaload));
+      dispatch(createTask(payload));
     }
   };
 
@@ -116,7 +142,7 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
         className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md"
       >
         <h3 className="text-lg font-bold mb-6">
-          {isNew ? "Add New Task" : "Edit Board"}
+          {isNew ? "Add New Task" : "Edit Task"}
         </h3>
 
         <form

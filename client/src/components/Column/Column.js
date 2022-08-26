@@ -3,6 +3,7 @@ import Task from "../Task/Task";
 
 import TaskDetailsModal from "../Modals/TaskDetailsModal";
 import DeleteModal from "../Modals/DeleteModal";
+import TaskModal from "../Modals/TaskModal";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -15,6 +16,8 @@ import { useParams } from "react-router-dom";
 const Column = ({ data }) => {
   const [showTaskDetailsModal, setShowTaskDetailsModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showTaskModal, setShowTaskModal] = useState(false);
+
   const { isSuccess, isError, isLoading, message } = useSelector(
     (state) => state.board.deleteTask
   );
@@ -59,6 +62,7 @@ const Column = ({ data }) => {
               task={task}
               setShowTaskDetailsModal={setShowTaskDetailsModal}
               setShowDeleteModal={setShowDeleteModal}
+              setShowTaskModal={setShowTaskModal}
             />
           )}
           {showDeleteModal && (
@@ -75,6 +79,13 @@ const Column = ({ data }) => {
               heading="Task"
               setShowDeleteModal={setShowDeleteModal}
               isLoading={isLoading}
+            />
+          )}
+          {showTaskModal && (
+            <TaskModal
+              isNew={false}
+              setShowTaskModal={setShowTaskModal}
+              task={task}
             />
           )}
         </div>
