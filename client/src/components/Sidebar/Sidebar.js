@@ -43,10 +43,8 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
 
   return (
     <main
-      className={`flex flex-col justify-between sidebar-h w-full max-w-[18.5rem] bg-colorPrimaryLight
-      border-r border-colorPrimaryLight2 pt-2 ut-animation relative  z-20  ${
-        !showSidebar && "-ml-[18.5rem]"
-      }`}
+      className={`flex flex-col justify-between sidebar-h  bg-colorPrimaryLight
+      border-r border-colorPrimaryLight2 pt-2 ut-animation relative  z-20  `}
     >
       {/* Section Top */}
       <section>

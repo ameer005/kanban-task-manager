@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 
+import logoMob from "../assets/logo-mobile.svg";
+
 import InputField from "../components/FormComps/InputField";
 import { schemaLogin } from "../utils/yup/schema";
 import { login, resetAuth } from "../redux/features/auth/authSlice";
@@ -40,7 +42,8 @@ const Login = () => {
   };
 
   return (
-    <main className="h-screen flex items-center justify-center bg-colorPrimary ">
+    <main className="h-screen flex flex-col gap-8 items-center justify-center bg-colorPrimary ">
+      <img src={logoMob} alt="" />
       <section className="w-full max-w-[30rem] p-7 bg-colorPrimaryLight rounded-lg mx-4">
         <h3 className="text-2xl md:text-xl font-bold mb-8">Login</h3>
 

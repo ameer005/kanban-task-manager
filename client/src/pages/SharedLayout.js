@@ -22,7 +22,11 @@ const SharedLayout = () => {
       <Navbar showSidebar={showSidebar} />
 
       <section className="flex h-full ">
-        <div className="lg:hidden">
+        <div
+          className={`lg:hidden w-full max-w-[18.5rem] ${
+            !showSidebar && "-ml-[18.5rem]"
+          } ut-animation`}
+        >
           <Sidebar setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
         </div>
 
