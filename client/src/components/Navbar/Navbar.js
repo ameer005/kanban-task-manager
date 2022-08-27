@@ -96,7 +96,7 @@ const Navbar = ({ showSidebar }) => {
   };
 
   return (
-    <main className="flex items-center px-7 md:px-5 justify-between  bg-colorPrimaryLight">
+    <main className="flex items-center px-7 md:px-5 h-[98px] lg:h-[88px] justify-between  bg-colorPrimaryLight">
       <section className="flex gap-5 md:gap-3 items-center">
         <div
           className={`border-r border-colorPrimaryLight2 py-7 ut-animation  ${

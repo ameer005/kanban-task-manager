@@ -2,8 +2,14 @@ import axios from "axios";
 
 let token = localStorage.getItem("token");
 
+let URL = "/api/v1";
+
+if (process.env.NODE_ENV !== "production") {
+  URL = "http://127.0.0.1:5000/api/v1";
+}
+
 const api = axios.create({
-  baseURL: "/api/v1",
+  baseURL: URL,
 });
 
 api.interceptors.request.use(
