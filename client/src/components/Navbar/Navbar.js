@@ -185,7 +185,7 @@ const Navbar = ({ showSidebar }) => {
       {/* right side of navbar */}
       {window.location.pathname !== "/" && (
         <section className="flex items-center gap-2 md:gap-1 py-7">
-          {board.columns.length !== 0 && (
+          {board?.columns.length !== 0 && (
             <button
               onClick={() => setShowTaskModal(true)}
               className="btn-primary px-4 text-sm lg:text-base lg:py-1"
