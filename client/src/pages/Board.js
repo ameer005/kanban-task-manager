@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import ScrollContainer from "react-indiana-drag-scroll";
 
 import Column from "../components/Column/Column";
 import BoardModal from "../components/Modals/BoardModal";
@@ -19,7 +20,13 @@ const Board = () => {
   };
 
   return (
-    <main className="flex gap-8 md:gap-5 w-full sidebar-h  px-8 md:px-5 py-6 overflow-scroll scrollbar-big">
+    <ScrollContainer
+      nativeMobileScroll={true}
+      vertical={false}
+      hideScrollbars={false}
+      ignoreElements={".Card"}
+      className="flex gap-8 md:gap-5 w-full sidebar-h  px-8 md:px-5 py-6 overflow-scroll scrollbar-big cursor-move"
+    >
       {renderColumnsList()}
       <div
         onClick={() => setShowBoardModal(true)}
@@ -36,7 +43,7 @@ const Board = () => {
           board={board}
         />
       )}
-    </main>
+    </ScrollContainer>
   );
 };
 
