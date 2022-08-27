@@ -5,11 +5,11 @@ import AnimatedRoutes from "./components/Routes/AnimatedRoutes";
 import { fetchAllBoards } from "./redux/features/board/boardSlice";
 
 const App = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(fetchAllBoards());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchAllBoards());
+  // }, [dispatch]);
 
   return (
     <main className=" text-colorNeutral text-xs">

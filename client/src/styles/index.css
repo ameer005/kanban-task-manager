@@ -89,3 +89,7 @@
 .modal-height {
   @apply max-h-[75vh] overflow-y-hidden;
 }
+
+.modal-margin {
+  @apply mx-4;
+}

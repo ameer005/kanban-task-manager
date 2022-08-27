@@ -152,13 +152,16 @@ const TaskDetailsModal = ({
 
   return ReactDom.createPortal(
     <main
-      onClick={() => setShowTaskDetailsModal(false)}
+      onClick={(e) => {
+        e.stopPropagation();
+        setShowTaskDetailsModal(false);
+      }}
       className="fixed top-0 bottom-0 right-0 left-0 bg-black/40 flex items-center justify-center z-50"
     >
       <div
         onClick={(e) => e.stopPropagation()}
         // onClick={() => setShowTaskDetailsModal(false)}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md modal-height"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md modal-height modal-margin"
       >
         <header className="mb-8">
           <div className="flex items-start justify-between mb-4">

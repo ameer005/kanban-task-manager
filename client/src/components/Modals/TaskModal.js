@@ -139,7 +139,7 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md max-h-[78vh] overflow-y-scroll scrollbar-modal"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md max-h-[78vh] overflow-y-scroll scrollbar-modal modal-margin"
       >
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-bold mb-6">

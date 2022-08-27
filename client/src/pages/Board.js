@@ -19,7 +19,7 @@ const Board = () => {
   };
 
   return (
-    <main className="flex gap-8 w-full sidebar-h  px-8 py-6 overflow-scroll scrollbar-big">
+    <main className="flex gap-8 md:gap-5 w-full sidebar-h  px-8 md:px-5 py-6 overflow-scroll scrollbar-big">
       {renderColumnsList()}
       <div
         onClick={() => setShowBoardModal(true)}

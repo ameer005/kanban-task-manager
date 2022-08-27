@@ -40,9 +40,9 @@ const Login = () => {
   };
 
   return (
-    <main className="h-screen flex items-center justify-center bg-colorPrimary">
-      <section className="w-full max-w-[30rem] p-7 bg-colorPrimaryLight rounded-sm">
-        <h3 className="text-2xl font-bold mb-8">Login</h3>
+    <main className="h-screen flex items-center justify-center bg-colorPrimary ">
+      <section className="w-full max-w-[30rem] p-7 bg-colorPrimaryLight rounded-lg mx-4">
+        <h3 className="text-2xl md:text-xl font-bold mb-8">Login</h3>
 
         <form
           onSubmit={handleSubmit(submitForm)}
