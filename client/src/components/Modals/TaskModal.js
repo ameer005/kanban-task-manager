@@ -104,7 +104,9 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
       };
 
       dispatch(deleteTask(deletePyaload));
-      dispatch(createTask(payload));
+      setTimeout(() => {
+        dispatch(createTask(payload));
+      }, 500);
     }
   };
 

@@ -121,7 +121,7 @@ const TaskDetailsModal = ({
 
       setTimeout(() => {
         dispatch(createTask(payload));
-      }, 200);
+      }, 500);
       // dispatch(createTask(payload));
     }
   };
