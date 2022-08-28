@@ -25,7 +25,7 @@ const Board = () => {
       vertical={false}
       hideScrollbars={false}
       ignoreElements={".Card"}
-      className="flex gap-8 md:gap-5 w-full sidebar-h  px-8 md:px-5 py-6 overflow-scroll scrollbar-big cursor-move"
+      className="flex gap-8 md:gap-5 w-full sidebar-h  px-8 md:px-5 py-6 overflow-scroll scrollbar-big cursor-all-scroll"
     >
       {renderColumnsList()}
       <div

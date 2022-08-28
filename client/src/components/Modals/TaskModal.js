@@ -141,7 +141,7 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md max-h-[78vh] overflow-y-scroll scrollbar-modal modal-margin"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 md:px-5  rounded-md max-h-[78vh] overflow-y-scroll scrollbar-modal modal-margin"
       >
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-bold mb-6">
@@ -185,7 +185,10 @@ const TaskModal = ({ setShowTaskModal, isNew, task }) => {
 
             <div className="flex flex-col gap-2 mb-4">
               {fields.map((subTask, index) => (
-                <div key={subTask.id} className="flex items-center gap-5">
+                <div
+                  key={subTask.id}
+                  className="flex items-center gap-5 md:gap-3"
+                >
                   <div className="flex-1">
                     <label>
                       <input

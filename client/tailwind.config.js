@@ -7,7 +7,6 @@ module.exports = {
       xl: { max: "1100px" },
       lg: { max: "900px" },
       md: { max: "500px" },
-      sm: { max: "500px" },
     },
     extend: {
       colors: {

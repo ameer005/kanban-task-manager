@@ -15,6 +15,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   }
 
   const user = await User.create({ name, email, password });
+  user.password = undefined;
   const token = user.createJwt();
 
   res.status(201).json({

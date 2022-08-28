@@ -20,7 +20,7 @@ const DeleteModal = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md modal-margin"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 md:px-5  rounded-md modal-margin"
       >
         <h3 className="text-lg font-bold text-colorRed mb-6">
           {`Delete this ${heading}`}
@@ -42,7 +42,7 @@ const DeleteModal = ({
           </button>
           <button
             onClick={() => setShowDeleteModal(false)}
-            className="text-sm bg-colorNeutral rounded-full text-colorpurple ut-animation font-bold py-[10px] w-full"
+            className="text-sm -mt-3 bg-colorNeutral rounded-full text-colorpurple ut-animation font-bold py-[10px] w-full"
             type="button"
           >
             Cancel

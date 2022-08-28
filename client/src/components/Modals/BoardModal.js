@@ -74,7 +74,7 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md modal-height modal-margin"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 md:px-5 rounded-md modal-height modal-margin"
       >
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-bold mb-6">
@@ -105,7 +105,10 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
 
             <div className="flex flex-col gap-2 mb-4">
               {fields.map((column, index) => (
-                <div key={column.id} className="flex items-center gap-5">
+                <div
+                  key={column.id}
+                  className="flex items-center gap-5 md:gap-3"
+                >
                   <div className="flex-1">
                     <label>
                       <input

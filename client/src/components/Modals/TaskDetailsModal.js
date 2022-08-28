@@ -161,7 +161,7 @@ const TaskDetailsModal = ({
       <div
         onClick={(e) => e.stopPropagation()}
         // onClick={() => setShowTaskDetailsModal(false)}
-        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 rounded-md modal-height modal-margin"
+        className="bg-colorPrimaryLight text-colorNeutral w-full max-w-[30rem] px-7 py-6 md:px-5  rounded-md modal-height modal-margin"
       >
         <header className="mb-8">
           <div className="flex items-start justify-between mb-4">
