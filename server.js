@@ -26,6 +26,13 @@ app.use(express.json());
 //   });
 // });
 
+if (process.env.NODE_ENV === "production") {
+  app.get("/", (req, res) => {
+    app.use(express.static(path.resolve(__dirname, "client", "build")));
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
+
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/boards", boardRouter);
@@ -41,13 +48,6 @@ app.use(errorHandlerMiddleware);
 
 // Server
 const port = process.env.PORT || 5000;
-
-if (process.env.NODE_ENV === "production") {
-  app.get("/", (req, res) => {
-    app.use(express.static(path.resolve(__dirname, "client", "build")));
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
 
 const start = async () => {
   try {
