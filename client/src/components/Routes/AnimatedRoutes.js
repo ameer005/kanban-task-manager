@@ -8,6 +8,7 @@ import Signup from "../../pages/Signup";
 import HomePage from "../../pages/HomePage";
 import SharedLayout from "../../pages/SharedLayout";
 import Board from "../../pages/Board";
+import NotFound from "../../pages/NotFound";
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const AnimatedRoutes = () => {
     <Routes location={location} key={location.pathname}>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="*" element={<NotFound />} />
 
       <Route
         path="/"
