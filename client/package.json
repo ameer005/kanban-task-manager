@@ -1,5 +1,4 @@
 {
-  "homepage": "kanban-tasks-manager.vercel.app",
   "name": "client",
   "version": "0.1.0",
   "private": true,
