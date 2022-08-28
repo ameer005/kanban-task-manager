@@ -144,7 +144,7 @@ const Navbar = ({ showSidebar }) => {
               >
                 <section className="mb-4">
                   <h3 className="uppercase text-sm font-bold text-colorMediumGray px-6 mb-5">
-                    all boards(2)
+                    {`all boards(${boardsList.length})`}
                   </h3>
 
                   {/* boards list */}

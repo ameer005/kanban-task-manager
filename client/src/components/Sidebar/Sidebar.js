@@ -49,7 +49,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
       {/* Section Top */}
       <section>
         <h3 className="uppercase font-bold text-colorMediumGray px-6 mb-6">
-          all boards(2)
+          {`all boards(${boardsList.length})`}
         </h3>
 
         {/* boards list */}
