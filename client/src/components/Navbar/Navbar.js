@@ -100,7 +100,7 @@ const Navbar = ({ showSidebar }) => {
       <section className="flex gap-5 md:gap-3 items-center">
         <div
           className={`border-r border-colorPrimaryLight2 py-7 ut-animation  ${
-            showSidebar ? "pr-28" : "pr-8"
+            showSidebar ? "pr-[113.5px]" : "pr-8"
           } lg:hidden`}
         >
           <img className="xl:w-[7rem]" src={logoDark} alt="logo" />

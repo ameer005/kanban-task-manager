@@ -3,17 +3,17 @@ import * as yup from "yup";
 export const schemaSignup = yup
   .object()
   .shape({
-    name: yup.string().required("Name cannot be empty"),
-    email: yup.string().email().required("Email cannot be empty"),
-    password: yup.string().min(8).required("Password cannot be empty"),
+    name: yup.string().required("required"),
+    email: yup.string().email().required("required"),
+    password: yup.string().min(8).required("required"),
   })
   .required();
 
 export const schemaLogin = yup
   .object()
   .shape({
-    email: yup.string().email().required("Email cannot be empty"),
-    password: yup.string().min(8).required("Password cannot be empty"),
+    email: yup.string().email().required("required"),
+    password: yup.string().min(8, "too short").required("required"),
   })
   .required();
 

@@ -9,7 +9,7 @@ const InputField = ({
   errors,
 }) => {
   return (
-    <label>
+    <label className="relative">
       <div className="text-sm font-bold mb-2">{labelText}</div>
       <input
         placeholder={placeHolder}
@@ -20,6 +20,11 @@ const InputField = ({
         }`}
         {...register(name)}
       />
+      {errors[name] && (
+        <p className="absolute top-[50%] translate-y-[25%] right-4 font-medium text-colorRed text-xs">
+          {errors[name].message}
+        </p>
+      )}
     </label>
   );
 };
