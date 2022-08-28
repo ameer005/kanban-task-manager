@@ -19,16 +19,16 @@ if (process.env.NODE_ENV !== "production") {
 app.use(cors());
 app.use(express.json());
 
+app.get("/", (req, res) => {
+  res.status(200).json({
+    status: "success",
+    message: "yo this is working",
+  });
+});
+
 // Routes
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/boards", boardRouter);
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client", "build")));
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
-}
 
 // Global Error handeling
 app.use((req, res) => {
