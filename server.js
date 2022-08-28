@@ -19,12 +19,12 @@ if (process.env.NODE_ENV !== "production") {
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.status(200).json({
-    status: "success",
-    message: "yo this is working",
-  });
-});
+// app.get("/", (req, res) => {
+//   res.status(200).json({
+//     status: "success",
+//     message: "yo this is working",
+//   });
+// });
 
 // Routes
 app.use("/api/v1/auth", authRouter);
