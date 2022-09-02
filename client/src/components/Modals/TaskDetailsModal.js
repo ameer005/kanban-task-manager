@@ -211,7 +211,7 @@ const TaskDetailsModal = ({
           onSubmit={handleSubmit(formSubmit)}
           className="flex flex-col gap-6"
         >
-          <div>
+          <div className="max-h-[30vh] overflow-y-scroll scrollbar-modal">
             <h3 className="mb-2 text-sm font-bold">Subtasks</h3>
 
             <div className="flex flex-col gap-2">
