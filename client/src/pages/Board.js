@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ScrollContainer from "react-indiana-drag-scroll";
+import { useQueryClient } from "@tanstack/react-query";
 
 import Column from "../components/Column/Column";
 import BoardModal from "../components/Modals/BoardModal";
 import { useFetchBoard } from "../hooks/api/board/useBoard";
+import useGetFetchQuery from "../hooks/api/useGetFetchQuery";
 
 const Board = () => {
   const [showBoardModal, setShowBoardModal] = useState(false);
   const { id } = useParams();
-
   const { data } = useFetchBoard(id);
   const board = data?.data.data.board;
 

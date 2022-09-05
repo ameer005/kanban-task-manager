@@ -8,9 +8,9 @@ import TaskModal from "../Modals/TaskModal";
 import {
   fetchAllBoards,
   resetDeletetask,
-  deleteTask,
 } from "../../redux/features/board/boardSlice";
 import { useParams } from "react-router-dom";
+import { useDeleteTask } from "../../hooks/api/board/useBoard";
 
 const Task = ({ data }) => {
   const [showTaskDetailsModal, setShowTaskDetailsModal] = useState(false);
@@ -18,19 +18,17 @@ const Task = ({ data }) => {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { isSuccess, isError, isLoading, message } = useSelector(
-    (state) => state.board.deleteTask
-  );
+  // const { isSuccess, isError, isLoading, message } = useSelector(
+  //   (state) => state.board.deleteTask
+  // );
+
+  const { mutate, isSuccess, isLoading } = useDeleteTask(true);
 
   useEffect(() => {
     if (isSuccess) {
-      if (showDeleteModal) {
-        dispatch(resetDeletetask());
-        dispatch(fetchAllBoards());
-        setShowDeleteModal(false);
-      }
+      setShowDeleteModal(false);
     }
-  }, [isError, isSuccess, isLoading, message]);
+  }, [isSuccess]);
 
   const completedSubTasks = data.subTasks.filter(
     (task) => task.isCompleted === true
@@ -56,7 +54,7 @@ const Task = ({ data }) => {
       )}
       {showDeleteModal && (
         <DeleteModal
-          action={deleteTask}
+          action={mutate}
           deletePyaload={{
             id: id,
             data: {

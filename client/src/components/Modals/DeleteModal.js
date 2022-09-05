@@ -11,8 +11,6 @@ const DeleteModal = ({
   isLoading,
   deletePyaload,
 }) => {
-  const dispatch = useDispatch();
-
   return ReactDom.createPortal(
     <main
       onClick={() => setShowDeleteModal(false)}
@@ -32,9 +30,7 @@ const DeleteModal = ({
             all columns and tasks and cannot be reversed.`}
           </p>
           <button
-            onClick={() =>
-              dispatch(action(heading === "Task" ? deletePyaload : id))
-            }
+            onClick={() => action(heading === "Task" ? deletePyaload : id)}
             className="text-sm bg-colorRed hover:bg-colorLightRed rounded-full  ut-animation font-bold py-[10px] w-full"
             type="button"
           >

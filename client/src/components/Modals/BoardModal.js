@@ -53,7 +53,6 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
   }, []);
 
   const formSubmit = (formData) => {
-    console.log(formData);
     if (isNew) {
       createBoard(formData);
     } else {

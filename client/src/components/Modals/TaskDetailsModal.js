@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import ReactDom from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useParams } from "react-router-dom";
@@ -9,17 +8,15 @@ import { MdMoreVert } from "react-icons/md";
 
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import SelectField from "../FormComps/SelectField";
-import InputField from "../FormComps/InputField";
+
 import { taskSchema } from "../../utils/yup/schema";
 
 import {
-  updateTask,
-  resetCreateTask,
-  fetchAllBoards,
-  deleteTask,
-  resetDeletetask,
-  createTask,
-} from "../../redux/features/board/boardSlice";
+  useCreateTask,
+  useUpdateTask,
+  useDeleteTask,
+  useFetchBoard,
+} from "../../hooks/api/board/useBoard";
 
 const TaskDetailsModal = ({
   setShowTaskDetailsModal,
@@ -27,17 +24,11 @@ const TaskDetailsModal = ({
   setShowDeleteModal,
   setShowTaskModal,
 }) => {
-  const dispatch = useDispatch();
   const menuRef = useRef();
   const menuBtnRef = useRef();
   const { id } = useParams();
-  const board = useSelector((state) =>
-    state.board.fetchAllBoards.boardsList.find((el) => el._id === id)
-  );
-  const { isSuccess, isError, isLoading } = useSelector(
-    (state) => state.board.createAndUpdateTask
-  );
   const [isSelectStatusOpen, setIsSelectStatusOpen] = useState(false);
+  const [updateTaskData, setupdateTaskData] = useState();
   const [selectStatusText, setSelectStatusText] = useState("Select Status");
   const [showDropdown, setShowDropdown] = useState(false);
   const {
@@ -55,13 +46,37 @@ const TaskDetailsModal = ({
     name: "subTasks",
   });
 
+  // fetching board by id
+  const { data } = useFetchBoard(id);
+  const board = data?.data.data.board;
+
+  // create task query
+  const {
+    mutate: createTask,
+    isSuccess: createTaskSuccess,
+    isLoading: createTaskLoaing,
+  } = useCreateTask();
+
+  const {
+    mutate: updateTask,
+    isSuccess: updateTaskSuccess,
+    isLoading: updateTaskLoaing,
+  } = useUpdateTask();
+
+  // delete task query
+  const { mutate: deleteTask, isSuccess: deleteTaskSuccess } = useDeleteTask();
+
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(resetCreateTask());
-      dispatch(fetchAllBoards());
+    if (createTaskSuccess || updateTaskSuccess) {
       setShowTaskDetailsModal(false);
     }
-  }, [isSuccess, isError]);
+  }, [createTaskSuccess, updateTaskSuccess]);
+
+  useEffect(() => {
+    if (deleteTaskSuccess) {
+      createTask(updateTaskData);
+    }
+  }, [deleteTaskSuccess]);
 
   // fetching active column name
   const activeStatus = board.columns.find(
@@ -102,7 +117,7 @@ const TaskDetailsModal = ({
         data: { columnId: task.status, taskId: task._id, task: formData },
       };
 
-      dispatch(updateTask(payload));
+      updateTask(payload);
     } else {
       const deletePyaload = {
         id: id,
@@ -117,12 +132,12 @@ const TaskDetailsModal = ({
         data: { ...formData },
       };
 
-      dispatch(deleteTask(deletePyaload));
+      setupdateTaskData(payload);
 
-      setTimeout(() => {
-        dispatch(createTask(payload));
-      }, 500);
-      // dispatch(createTask(payload));
+      deleteTask(deletePyaload);
+      // setTimeout(() => {
+      //   createTask(payload);
+      // }, 500);
     }
   };
 
@@ -250,7 +265,11 @@ const TaskDetailsModal = ({
           </div>
 
           <button type={"submit"} className="btn-primary text-sm">
-            {isLoading ? <LoadingSpinner /> : "Save Changes"}
+            {createTaskLoaing || updateTaskLoaing ? (
+              <LoadingSpinner />
+            ) : (
+              "Save Changes"
+            )}
           </button>
           <button
             onClick={() => setShowTaskDetailsModal(false)}

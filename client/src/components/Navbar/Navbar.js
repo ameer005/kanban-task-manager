@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { RiDashboardLine } from "react-icons/ri";
 
 import {
@@ -14,12 +14,10 @@ import logoMobile from "../../assets/logo-mobile.svg";
 import BoardModal from "../Modals/BoardModal";
 import TaskModal from "../Modals/TaskModal";
 import DeleteModal from "../Modals/DeleteModal";
-import {
-  deleteBoard,
-  resetDeleteBoard,
-  fetchAllBoards,
-} from "../../redux/features/board/boardSlice";
+
 import { logout } from "../../redux/features/auth/authSlice";
+
+import { useDeleteBoard, useFetchBoards } from "../../hooks/api/board/useBoard";
 
 const Navbar = ({ showSidebar }) => {
   const navigate = useNavigate();
@@ -34,16 +32,16 @@ const Navbar = ({ showSidebar }) => {
   const [showMobileCreateBoard, setShowMobileCreateBoard] = useState(false);
 
   const { id } = useParams();
-  const { isSuccess, isError, isLoading, message } = useSelector(
-    (state) => state.board.deleteBoard
-  );
-  const { boardsList, isSuccess: boardListSuccess } = useSelector(
-    (state) => state.board.fetchAllBoards
-  );
+  const { data, isSuccess: fetchBoardSuccess } = useFetchBoards();
+  const boardsList = data?.data.data.boards;
 
-  const board = useSelector((state) =>
-    state.board.fetchAllBoards.boardsList.find((el) => el._id === id)
-  );
+  const {
+    mutate,
+    isSuccess: deleteBoardSuccess,
+    isLoading: deleteBoardLoading,
+  } = useDeleteBoard();
+
+  const board = boardsList?.find((el) => el._id === id);
 
   useEffect(() => {
     const handler = (e) => {
@@ -63,16 +61,14 @@ const Navbar = ({ showSidebar }) => {
   });
 
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(resetDeleteBoard());
-      dispatch(fetchAllBoards());
+    if (deleteBoardSuccess) {
       navigate("/");
     }
-  }, [isSuccess, isError, message]);
+  }, [deleteBoardSuccess]);
 
   // bord list function for mobile sidebar
   const renderBoardsList = () => {
-    if (!boardListSuccess) return;
+    if (!fetchBoardSuccess) return;
 
     return boardsList.map((board) => {
       return (
@@ -227,11 +223,11 @@ const Navbar = ({ showSidebar }) => {
 
       {showDeleteModal && (
         <DeleteModal
-          action={deleteBoard}
+          action={mutate}
           id={id}
           heading="Board"
           setShowDeleteModal={setShowDeleteModal}
-          isLoading={isLoading}
+          isLoading={deleteBoardLoading}
         />
       )}
       {showBoardModal && (

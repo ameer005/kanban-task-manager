@@ -5,6 +5,9 @@ import {
   createNewBoad,
   updateBoard,
   deleteBoard,
+  createTask,
+  updateTask,
+  deleteTask,
 } from "./boardServices";
 
 // fetching all boards
@@ -14,7 +17,7 @@ export const useFetchBoards = () => {
 
 // fetching individual board by id
 export const useFetchBoard = (boardId) => {
-  return useQuery(["board", boardId], fetchBoard);
+  return useQuery(["boards", boardId], fetchBoard);
 };
 
 // creating new board
@@ -43,6 +46,38 @@ export const useDeleteBoard = () => {
   return useMutation(deleteBoard, {
     onSuccess: () => {
       queryClient.invalidateQueries("boards");
+    },
+  });
+};
+
+// create task
+export const useCreateTask = () => {
+  const queryClient = useQueryClient();
+  return useMutation(createTask, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("boards");
+    },
+  });
+};
+
+// create task
+export const useUpdateTask = () => {
+  const queryClient = useQueryClient();
+  return useMutation(updateTask, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("boards");
+    },
+  });
+};
+
+// deleteTask
+export const useDeleteTask = (fetch) => {
+  const queryClient = useQueryClient();
+  return useMutation(deleteTask, {
+    onSuccess: () => {
+      if (fetch) {
+        fetch && queryClient.invalidateQueries("boards");
+      }
     },
   });
 };

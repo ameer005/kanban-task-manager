@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -7,15 +7,9 @@ import { BsFillEyeFill } from "react-icons/bs";
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 
-import { fetchAllBoards } from "../redux/features/board/boardSlice";
-
 const SharedLayout = () => {
   const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(true);
-
-  useEffect(() => {
-    dispatch(fetchAllBoards());
-  }, [dispatch]);
 
   return (
     <main className="bg-colorPrimary">

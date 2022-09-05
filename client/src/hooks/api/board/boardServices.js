@@ -19,3 +19,15 @@ export const updateBoard = (payload) => {
 export const deleteBoard = (boardId) => {
   return api.delete(`/boards/${boardId}`);
 };
+
+export const createTask = (payload) => {
+  return api.post(`/boards/${payload.id}/task`, payload.data);
+};
+
+export const updateTask = (payload) => {
+  return api.patch(`/boards/${payload.id}/task`, payload.data);
+};
+
+export const deleteTask = (payload) => {
+  return api.put(`/boards/${payload.id}/task`, payload.data);
+};
