@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import ReactDom from "react-dom";
-import { useDispatch, useSelector } from "react-redux";
+
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -9,27 +9,26 @@ import { IoClose } from "react-icons/io5";
 import InputField from "../FormComps/InputField";
 import { boardSchema } from "../../utils/yup/schema";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-
-import {
-  createNewBoard,
-  resetCreateUpdateBoard,
-  fetchAllBoards,
-  updateBoard,
-} from "../../redux/features/board/boardSlice";
+import { useCreateBoard, useUpdateBoard } from "../../hooks/api/board/useBoard";
 
 const BoardModal = ({ setShowBoardModal, isNew, board }) => {
-  const dispatch = useDispatch();
-  const { isError, message, isSuccess, isLoading } = useSelector(
-    (state) => state.board.createAndUpdateBoard
-  );
+  const {
+    mutate: createBoard,
+    isLoading: createLoading,
+    isSuccess: createSuccess,
+  } = useCreateBoard();
+
+  const {
+    mutate: updateBoard,
+    isLoading: updateLoading,
+    isSuccess: updateSuccess,
+  } = useUpdateBoard();
 
   useEffect(() => {
-    if (isSuccess) {
-      dispatch(resetCreateUpdateBoard());
-      dispatch(fetchAllBoards());
+    if (createSuccess || updateSuccess) {
       setShowBoardModal(false);
     }
-  }, [isError, message, isSuccess]);
+  }, [createSuccess, updateSuccess]);
 
   const {
     register,
@@ -56,14 +55,14 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
   const formSubmit = (formData) => {
     console.log(formData);
     if (isNew) {
-      dispatch(createNewBoard(formData));
+      createBoard(formData);
     } else {
       const payload = {
         id: board._id,
         data: { ...formData },
       };
 
-      dispatch(updateBoard(payload));
+      updateBoard(payload);
     }
   };
 
@@ -142,7 +141,7 @@ const BoardModal = ({ setShowBoardModal, isNew, board }) => {
           </div>
 
           <button type={"submit"} className="btn-primary text-sm">
-            {isLoading ? (
+            {createLoading || updateLoading ? (
               <LoadingSpinner />
             ) : isNew ? (
               "Create New Board"

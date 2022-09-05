@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import ScrollContainer from "react-indiana-drag-scroll";
 
 import Column from "../components/Column/Column";
 import BoardModal from "../components/Modals/BoardModal";
+import { useFetchBoard } from "../hooks/api/board/useBoard";
 
 const Board = () => {
   const [showBoardModal, setShowBoardModal] = useState(false);
   const { id } = useParams();
-  const board = useSelector((state) =>
-    state.board.fetchAllBoards.boardsList.find((el) => el._id === id)
-  );
+
+  const { data } = useFetchBoard(id);
+  const board = data?.data.data.board;
 
   const renderColumnsList = () => {
     return board?.columns.map((column) => {

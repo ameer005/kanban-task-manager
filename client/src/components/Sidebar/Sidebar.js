@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { RiDashboardLine } from "react-icons/ri";
 import { BiHide } from "react-icons/bi";
 
 import { logout } from "../../redux/features/auth/authSlice";
 import BoardModal from "../Modals/BoardModal";
+import { useFetchBoards } from "../../hooks/api/board/useBoard";
 
 const Sidebar = ({ setShowSidebar, showSidebar }) => {
   const [showBoardModal, setShowBoardModal] = useState(false);
 
   const dispatch = useDispatch();
-  const { boardsList, isSuccess, isError, isLoading } = useSelector(
-    (state) => state.board.fetchAllBoards
-  );
+
+  const { data, isSuccess } = useFetchBoards();
+  const boardsList = data?.data.data.boards;
 
   // bord list function
   const renderBoardsList = () => {
@@ -49,7 +50,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
       {/* Section Top */}
       <section>
         <h3 className="uppercase font-bold text-colorMediumGray px-6 mb-6">
-          {`all boards(${boardsList.length})`}
+          {`all boards(${boardsList?.length})`}
         </h3>
 
         {/* boards list */}
