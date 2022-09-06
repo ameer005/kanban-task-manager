@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
 import TaskDetailsModal from "../Modals/TaskDetailsModal";
 import DeleteModal from "../Modals/DeleteModal";
 import TaskModal from "../Modals/TaskModal";
 
-import {
-  fetchAllBoards,
-  resetDeletetask,
-} from "../../redux/features/board/boardSlice";
 import { useParams } from "react-router-dom";
 import { useDeleteTask } from "../../hooks/api/board/useBoard";
 
@@ -16,7 +11,7 @@ const Task = ({ data }) => {
   const [showTaskDetailsModal, setShowTaskDetailsModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showTaskModal, setShowTaskModal] = useState(false);
-  const dispatch = useDispatch();
+
   const { id } = useParams();
   // const { isSuccess, isError, isLoading, message } = useSelector(
   //   (state) => state.board.deleteTask

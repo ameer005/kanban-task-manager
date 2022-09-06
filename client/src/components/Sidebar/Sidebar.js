@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
 
 import { RiDashboardLine } from "react-icons/ri";
 import { BiHide } from "react-icons/bi";
 
-import { logout } from "../../redux/features/auth/authSlice";
 import BoardModal from "../Modals/BoardModal";
 import { useFetchBoards } from "../../hooks/api/board/useBoard";
+import useStore from "../../store/useStore";
 
 const Sidebar = ({ setShowSidebar, showSidebar }) => {
   const [showBoardModal, setShowBoardModal] = useState(false);
-
-  const dispatch = useDispatch();
+  const removeUser = useStore((state) => state.removeUser);
 
   const { data, isSuccess } = useFetchBoards();
   const boardsList = data?.data.data.boards;
@@ -69,7 +67,7 @@ const Sidebar = ({ setShowSidebar, showSidebar }) => {
       {/* Section Bottom */}
       <section className="flex flex-col mb-7 pr-6">
         <button
-          onClick={() => dispatch(logout())}
+          onClick={() => removeUser()}
           className="btn-primary w-full max-w-[6rem] self-center mb-5 text-sm"
         >
           Logout

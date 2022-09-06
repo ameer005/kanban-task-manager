@@ -1,9 +1,9 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import useStore from "../../store/useStore";
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoutes = ({ children }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = useStore((state) => state.user);
 
   return user ? children : <Navigate to={"/login"} />;
 };

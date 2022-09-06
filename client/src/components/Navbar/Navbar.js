@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+
 import { RiDashboardLine } from "react-icons/ri";
 
 import {
@@ -14,14 +14,12 @@ import logoMobile from "../../assets/logo-mobile.svg";
 import BoardModal from "../Modals/BoardModal";
 import TaskModal from "../Modals/TaskModal";
 import DeleteModal from "../Modals/DeleteModal";
-
-import { logout } from "../../redux/features/auth/authSlice";
+import useStore from "../../store/useStore";
 
 import { useDeleteBoard, useFetchBoards } from "../../hooks/api/board/useBoard";
 
 const Navbar = ({ showSidebar }) => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const menuRef = useRef();
   const menuBtnRef = useRef();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -30,6 +28,7 @@ const Navbar = ({ showSidebar }) => {
   const [showTaskModal, setShowTaskModal] = useState(false);
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
   const [showMobileCreateBoard, setShowMobileCreateBoard] = useState(false);
+  const removeUser = useStore((state) => state.removeUser);
 
   const { id } = useParams();
   const { data, isSuccess: fetchBoardSuccess } = useFetchBoards();
@@ -166,7 +165,7 @@ const Navbar = ({ showSidebar }) => {
                 {/* Section Bottom */}
                 <section className="flex justify-center items-center pr-6">
                   <button
-                    onClick={() => dispatch(logout())}
+                    onClick={() => removeUser()}
                     className="btn-primary w-full max-w-[6rem] self-center text-sm"
                   >
                     Logout

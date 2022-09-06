@@ -1,14 +1,11 @@
 import React, { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
-
 import { BsFillEyeFill } from "react-icons/bs";
 
 import Navbar from "../components/Navbar/Navbar";
 import Sidebar from "../components/Sidebar/Sidebar";
 
 const SharedLayout = () => {
-  const dispatch = useDispatch();
   const [showSidebar, setShowSidebar] = useState(true);
 
   return (
