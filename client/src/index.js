@@ -16,7 +16,9 @@ root.render(
       <BrowserRouter>
         <App />
       </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
+      {process.env.NODE_ENV !== "production" && (
+        <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
+      )}
     </QueryClientProvider>
   </React.StrictMode>
 );
